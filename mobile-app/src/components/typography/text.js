@@ -32,12 +32,20 @@ const label = (theme) => `
     font-weight: ${theme.fontWeights.medium};
 `;
 
+const lightLabel = (theme) => `
+    font-family: ${theme.fonts.heading};
+    font-size: ${theme.fontSizes.body};
+    font-weight: ${theme.fontWeights.bold};
+    color: ${theme.colors.text.inverse}
+`;
+
 const variants = {
   body,
   label,
   caption,
   error,
   hint,
+  lightLabel
 };
 
 export const Text = styled.Text`
