@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { StyleSheet } from "react-native";
 import { Text } from "../../../components/typography/text";
 import { Spacer } from "../../../components/spacer/spacer";
@@ -17,7 +17,6 @@ export const MainMenuScreen = ({navigation}) => {
                 <MenuButton
                     mode="contained"
                     icon="camera"
-                    labelStyle={{textAlign: "left"}}
                     onPress={() => {
                         console.log('Pressed report');
                         navigation.navigate("CameraScreen");
