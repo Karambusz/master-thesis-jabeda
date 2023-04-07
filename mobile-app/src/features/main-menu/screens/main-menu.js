@@ -7,7 +7,7 @@ import { MainMenuContainer, MenuButton } from "../components/main-menu.styles";
 import { toastConfig } from "../utility/main-screen-toast-config";
 import Toast from 'react-native-toast-message';
 
-export const MainMenuScreen = () => {
+export const MainMenuScreen = ({navigation}) => {
 
     const isHistoryExist = false; //TODO change during history development
     return (
@@ -18,7 +18,10 @@ export const MainMenuScreen = () => {
                     mode="contained"
                     icon="camera"
                     labelStyle={{textAlign: "left"}}
-                    onPress={() => console.log('Pressed report')}
+                    onPress={() => {
+                        console.log('Pressed report');
+                        navigation.navigate("CameraScreen")
+                    }}
                 >
                     <Text variant="lightLabel">
                         Zgłoś problem

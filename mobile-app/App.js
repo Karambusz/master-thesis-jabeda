@@ -10,7 +10,7 @@ import {
     useFonts as useLato,
     Lato_400Regular
 } from "@expo-google-fonts/lato";
-import { MainMenuScreen } from "./src/features/main-menu/screens/main-menu";
+import { Navigation } from "./src/infrastructure/navigation";
 
 export default function App() {
     const [oswaldLoaded] = useOswald({
@@ -27,7 +27,7 @@ export default function App() {
   return (
       <ThemeProvider theme={theme}>
           <SafeAreaProvider>
-              <MainMenuScreen />
+              <Navigation />
           </SafeAreaProvider>
       </ThemeProvider>
   );
