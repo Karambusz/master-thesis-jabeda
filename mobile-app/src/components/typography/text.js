@@ -54,5 +54,5 @@ export const Text = styled.Text`
 `;
 
 Text.defaultProps = {
-  variant: "body",
+  variant: "label",
 };

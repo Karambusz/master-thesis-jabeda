@@ -20,7 +20,7 @@ export const MainMenuScreen = ({navigation}) => {
                     labelStyle={{textAlign: "left"}}
                     onPress={() => {
                         console.log('Pressed report');
-                        navigation.navigate("CameraScreen")
+                        navigation.navigate("CameraScreen");
                     }}
                 >
                     <Text variant="lightLabel">

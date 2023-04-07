@@ -11,6 +11,7 @@ import {
     Lato_400Regular
 } from "@expo-google-fonts/lato";
 import { Navigation } from "./src/infrastructure/navigation";
+import * as Linking from 'expo-linking';
 
 export default function App() {
     const [oswaldLoaded] = useOswald({
@@ -24,11 +25,12 @@ export default function App() {
     if (!oswaldLoaded || !latoLoaded) {
         return null;
     }
-  return (
+    // Linking.openURL('app-settings:');
+    return (
       <ThemeProvider theme={theme}>
           <SafeAreaProvider>
               <Navigation />
           </SafeAreaProvider>
       </ThemeProvider>
-  );
+    );
 }
