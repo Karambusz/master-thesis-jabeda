@@ -1,18 +1,15 @@
 import React, { useState } from "react";
-import { colors } from "../../../infrastructure/theme/colors";
 import { StyleSheet } from "react-native";
 import { Text } from "../../../components/typography/text";
 import { Spacer } from "../../../components/spacer/spacer";
 import { Background, BackgroundCover } from "../../../components/background/background";
-import {MainMenuContainer, MenuButton } from "../components/main-menu.styles";
-import { Ionicons } from "@expo/vector-icons";
-import { Snackbar } from "react-native-paper";
+import { MainMenuContainer, MenuButton } from "../components/main-menu.styles";
+import { toastConfig } from "../utility/main-screen-toast-config";
+import Toast from 'react-native-toast-message';
 
 export const MainMenuScreen = () => {
+
     const isHistoryExist = false; //TODO change during history development
-    const [visible, setVisible] = useState(false);
-    const onToggleSnackBar = () => setVisible(!visible);
-    const onDismissSnackBar = () => setVisible(false);
     return (
         <Background>
             <BackgroundCover/>
@@ -35,7 +32,15 @@ export const MainMenuScreen = () => {
                     labelStyle={{textAlign: "left"}}
                     onPress={() => {
                         if (!isHistoryExist) {
-                            onToggleSnackBar();
+                            Toast.show({
+                                type: 'info',
+                                text1: 'Uwaga',
+                                text2: 'Zgłoś problem, aby mieć dostęp do historii',
+                                position: 'bottom',
+                                visibilityTime: 3000,
+                                autoHide: true,
+                                bottomOffset: 20
+                            });
                         } else {
                             console.log("Pressed history")
                             //TODO navigate to history screen
@@ -46,17 +51,7 @@ export const MainMenuScreen = () => {
                     </Text>
                 </MenuButton>
             </MainMenuContainer>
-            <Snackbar
-                visible={visible}
-                elevation={3}
-                onDismiss={onDismissSnackBar}
-                action={{
-                    label: <Ionicons name="close" size={20} color={colors.ui.error} />
-                }}>
-                <Text variant="lightLabel">
-                    Zgłoś problem, aby mieć dostęp do historii
-                </Text>
-            </Snackbar>
+            <Toast config={toastConfig} />
         </Background>
     )
 }
