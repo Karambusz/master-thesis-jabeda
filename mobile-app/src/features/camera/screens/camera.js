@@ -7,7 +7,7 @@ import { Button, View } from 'react-native';
 import { ReportProblemCamera, TakePhotoButtonContainer, TakePhotoButton } from "../components/camera.styles";
 
 
-export const CameraScreen = ({navigation, ...props}) => {
+export const CameraScreen = ({ navigation }) => {
     const cameraRef = useRef();
     const [zoom, setZoom] = useState(0);
     const [previewVisible, setPreviewVisible] = useState(false);
@@ -33,19 +33,15 @@ export const CameraScreen = ({navigation, ...props}) => {
     const takePhoto = async () => {
         if (cameraRef) {
             const photo = await cameraRef.current.takePictureAsync();
-            console.log(photo);
             setPreviewVisible(true)
             setCapturedImage(photo);
         }
     };
 
     const retakePhoto = () => {
-        console.log("click retake");
         setCapturedImage(null)
         setPreviewVisible(false)
     }
-
-    console.log(permission);
 
     if (!permission) {
         // Camera permissions are still loading
@@ -66,7 +62,10 @@ export const CameraScreen = ({navigation, ...props}) => {
         <>
         {
             previewVisible && capturedImage ? (
-                    <CameraPreview photo={capturedImage} retakePhoto={retakePhoto} />
+                    <CameraPreview
+                        navigation={navigation}
+                        photo={capturedImage}
+                        retakePhoto={retakePhoto} />
             )
             : (
                 <PinchGestureHandler
@@ -87,5 +86,4 @@ export const CameraScreen = ({navigation, ...props}) => {
         }
         </>
         )
-
 }

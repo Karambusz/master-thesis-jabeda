@@ -1,5 +1,6 @@
 import React from "react";
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { Provider as PaperProvider } from 'react-native-paper';
 import { theme } from "./src/infrastructure/theme";
 import { ThemeProvider } from "styled-components/native";
 import {
@@ -29,7 +30,9 @@ export default function App() {
     return (
       <ThemeProvider theme={theme}>
           <SafeAreaProvider>
-              <Navigation />
+              <PaperProvider>
+                  <Navigation />
+              </PaperProvider>
           </SafeAreaProvider>
       </ThemeProvider>
     );

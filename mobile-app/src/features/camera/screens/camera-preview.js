@@ -5,7 +5,7 @@ import { Text } from "../../../components/typography/text";
 
 
 
-export const CameraPreview = ({photo, retakePhoto}) => {
+export const CameraPreview = ({ photo, retakePhoto, navigation }) => {
     return (
         <View
             style={{
@@ -34,7 +34,11 @@ export const CameraPreview = ({photo, retakePhoto}) => {
                 <CameraPreviewButton
                     mode="contained"
                     icon="send"
-                    onPress={() => {}}
+                    onPress={() => {
+                        navigation.navigate("ProblemReportScreen", {
+                            photo: photo
+                        })}
+                    }
                 >
                     <Text variant="lightLabel">
                         Zgłoś

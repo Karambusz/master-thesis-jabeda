@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import { Text } from "../../../components/typography/text";
 import { Spacer } from "../../../components/spacer/spacer";
-import { Background, BackgroundCover } from "../../../components/background/background";
+import { MainMenuBackground, BackgroundCover } from "../../../components/background/background";
 import { MainMenuContainer, MenuButton } from "../components/main-menu.styles";
 import { toastConfig } from "../utility/main-screen-toast-config";
 import Toast from 'react-native-toast-message';
@@ -11,7 +11,7 @@ export const MainMenuScreen = ({navigation}) => {
 
     const isHistoryExist = false; //TODO change during history development
     return (
-        <Background>
+        <MainMenuBackground>
             <BackgroundCover/>
             <MainMenuContainer>
                 <MenuButton
@@ -54,7 +54,7 @@ export const MainMenuScreen = ({navigation}) => {
                 </MenuButton>
             </MainMenuContainer>
             <Toast config={toastConfig} />
-        </Background>
+        </MainMenuBackground>
     )
 }
 
