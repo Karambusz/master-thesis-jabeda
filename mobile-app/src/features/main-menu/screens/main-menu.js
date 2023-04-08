@@ -6,6 +6,11 @@ import { MainMenuBackground, BackgroundCover } from "../../../components/backgro
 import { MainMenuContainer, MenuButton } from "../components/main-menu.styles";
 import { toastConfig } from "../utility/main-screen-toast-config";
 import Toast from 'react-native-toast-message';
+import {
+    HISTORY_BUTTON_LABEL,
+    HISTORY_TOAST_TEXT1_MESSAGE, HISTORY_TOAST_TEXT2_MESSAGE,
+    REPORT_PROBLEM_BUTTON_LABEL
+} from "../../../constants/constants";
 
 export const MainMenuScreen = ({navigation}) => {
 
@@ -23,7 +28,7 @@ export const MainMenuScreen = ({navigation}) => {
                     }}
                 >
                     <Text variant="lightLabel">
-                        Zgłoś problem
+                        {REPORT_PROBLEM_BUTTON_LABEL}
                     </Text>
                 </MenuButton>
                 <Spacer size="large"/>
@@ -36,8 +41,8 @@ export const MainMenuScreen = ({navigation}) => {
                         if (!isHistoryExist) {
                             Toast.show({
                                 type: 'info',
-                                text1: 'Uwaga',
-                                text2: 'Zgłoś problem, aby mieć dostęp do historii',
+                                text1: HISTORY_TOAST_TEXT1_MESSAGE,
+                                text2: HISTORY_TOAST_TEXT2_MESSAGE,
                                 position: 'bottom',
                                 visibilityTime: 3000,
                                 autoHide: true,
@@ -49,7 +54,7 @@ export const MainMenuScreen = ({navigation}) => {
                         }
                     }}>
                     <Text variant="lightLabel">
-                        Historia
+                        {HISTORY_BUTTON_LABEL}
                     </Text>
                 </MenuButton>
             </MainMenuContainer>

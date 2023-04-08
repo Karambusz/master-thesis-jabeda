@@ -18,7 +18,21 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import Toast from "react-native-toast-message";
 import {toastConfig} from "../../main-menu/utility/main-screen-toast-config";
 import {Text} from "../../../components/typography/text";
+import {
+    CATEGORY_ERROR_MESSAGE,
+    CATEGORY_LABEL, DESCRIPTION_LABEL, LOCATION_SEARCH_PLACEHOLDER,
+    MODAL_CLOSE_BUTTON_LABEL,
+    MODAL_DONE_BUTTON_LABEL, PROBLEM_ERROR_MESSAGE, PROBLEM_LABEL,
+    PROBLEM_TOAST_TEXT1_MESSAGE, PROBLEM_TOAST_TEXT2_MESSAGE, REPORT_PROBLEM_SUBMIT_LABEL
+} from "../../../constants/constants";
 
+export const selectValidator = (value, errorText = '') => {
+    if (!value || value.length <= 0) {
+        return errorText;
+    }
+
+    return '';
+};
 
 const isAndroid = Platform.OS === "android";
 export const ProblemReportScreen = ({route}) => {
@@ -55,6 +69,8 @@ export const ProblemReportScreen = ({route}) => {
         selectedList: [],
         error: '',
     });
+    const [description, setDescription] = useState('');
+    const [descriptionError, setDescriptionError] = useState(false);
 
     return (
         <Background>
@@ -75,7 +91,7 @@ export const ProblemReportScreen = ({route}) => {
                                 style={{padding: 10}
                             }>
                                 <PaperSelect
-                                    label="Kategoria"
+                                    label={CATEGORY_LABEL}
                                     value={categoryList.value}
                                     onSelection={(value) => {
                                         //value = {"selectedList": [{"_id": "4", "value": "Śmiecie i segregacja"}], "text": "Śmiecie i segregacja"}
@@ -90,7 +106,7 @@ export const ProblemReportScreen = ({route}) => {
                                             const categoryId = value.selectedList[0]._id;
                                             setProblemList({
                                                 ...problemList,
-                                                list: [problemsObject[categoryId - 1]]
+                                                list: [problemsObject[categoryId - 1]],
                                             });
                                             setProblemListDisabled(false);
                                         } else {
@@ -98,7 +114,8 @@ export const ProblemReportScreen = ({route}) => {
                                                 ...problemList,
                                                 list: [],
                                                 selectedList: [],
-                                                value: ''
+                                                value: '',
+                                                error: ''
                                             });
                                             setProblemListDisabled(true);
                                         }
@@ -107,13 +124,14 @@ export const ProblemReportScreen = ({route}) => {
                                     arrayList={[...categoryList.list]}
                                     selectedArrayList={[...categoryList.selectedList]}
                                     errorText={categoryList.error}
+                                    errorStyle={{marginTop: 5}}
                                     multiEnable={false}
                                     hideSearchBox={true}
                                     activeOutlineColor={colors.brand.primary}
-                                    outlineColor={colors.brand.primary}
-                                    textInputColor={colors.text.primary}
-                                    modalCloseButtonText={"Zamknij"}
-                                    modalDoneButtonText={"Wybierz"}
+                                    outlineColor={categoryList.error ? colors.ui.error : colors.brand.primary}
+                                    textInputColor={categoryList.error ? colors.ui.error : colors.brand.primary}
+                                    modalCloseButtonText={MODAL_CLOSE_BUTTON_LABEL}
+                                    modalDoneButtonText={MODAL_DONE_BUTTON_LABEL}
                                     dialogButtonLabelStyle={{color: colors.brand.primary}}
                                 />
                                 <Spacer position="top" size="medium" />
@@ -122,8 +140,8 @@ export const ProblemReportScreen = ({route}) => {
                                     if (isProblemListDisabled) {
                                         Toast.show({
                                             type: 'info',
-                                            text1: 'Uwaga',
-                                            text2: 'Najpierw wybierz kategorię',
+                                            text1: PROBLEM_TOAST_TEXT1_MESSAGE,
+                                            text2: PROBLEM_TOAST_TEXT2_MESSAGE,
                                             position: 'bottom',
                                             visibilityTime: 3000,
                                             autoHide: true,
@@ -134,7 +152,7 @@ export const ProblemReportScreen = ({route}) => {
                                     <View>
                                         <PaperSelect
                                             disabled={isProblemListDisabled}
-                                            label="Problem"
+                                            label={PROBLEM_LABEL}
                                             value={problemList.value}
                                             onSelection={(value) => {
                                                 setProblemList({
@@ -147,13 +165,14 @@ export const ProblemReportScreen = ({route}) => {
                                             arrayList={[...problemList.list]}
                                             selectedArrayList={[...problemList.selectedList]}
                                             errorText={problemList.error}
+                                            errorStyle={{marginTop: 5}}
                                             multiEnable={false}
                                             hideSearchBox={true}
-                                            activeOutlineColor={colors.brand.primary}
-                                            outlineColor={colors.brand.primary}
+                                            activeOutlineColor={problemList.error ? colors.ui.error : colors.brand.primary}
+                                            outlineColor={problemList.error ? colors.ui.error : colors.brand.primary}
                                             textInputColor={colors.text.primary}
-                                            modalCloseButtonText={"Zamknij"}
-                                            modalDoneButtonText={"Wybierz"}
+                                            modalCloseButtonText={MODAL_CLOSE_BUTTON_LABEL}
+                                            modalDoneButtonText={MODAL_DONE_BUTTON_LABEL}
                                             dialogButtonLabelStyle={{color: colors.brand.primary}}
                                         />
                                     </View>
@@ -161,7 +180,7 @@ export const ProblemReportScreen = ({route}) => {
                                 <Spacer position="top" size="medium" />
                                 <Spacer position="top" size="medium" />
                                 <LocationSearch
-                                    placeholder="Lokalizacja"
+                                    placeholder={LOCATION_SEARCH_PLACEHOLDER}
                                     onIconPress={() => console.log("icon")}
                                     icon="map"
                                     value="test"
@@ -180,8 +199,14 @@ export const ProblemReportScreen = ({route}) => {
                                     mode={"outlined"}
                                     outlineColor={colors.brand.primary}
                                     activeOutlineColor={colors.brand.primary}
-                                    label="Opis"
+                                    label={DESCRIPTION_LABEL}
+                                    value={description}
+                                    onChangeText={text => {
+                                        setDescription(text);
+                                        setDescriptionError(!(text && text.length > 0));
+                                    }}
                                     numberOfLines={5}
+                                    error={descriptionError}
                                 />
                                 <Spacer position="top" size="medium" />
                                 <Spacer position="top" size="medium" />
@@ -190,12 +215,20 @@ export const ProblemReportScreen = ({route}) => {
                                         mode="contained"
                                         icon="send"
                                         onPress={() => {
-                                            console.log("zgloś");
+                                            const categoryError = selectValidator(categoryList.value, CATEGORY_ERROR_MESSAGE);
+                                            const problemError = selectValidator(problemList.value, PROBLEM_ERROR_MESSAGE);
+                                            setCategoryList({ ...categoryList, error: categoryError });
+                                            setProblemList({ ...problemList, error: problemError });
+                                            setDescriptionError(!(description && description.length > 0));
+                                            if (categoryError || categoryError || descriptionError) {
+                                                return;
+                                            }
+                                            console.log("save");
                                         }
                                         }
                                     >
                                         <Text variant="lightLabel">
-                                            Zgłoś
+                                            {REPORT_PROBLEM_SUBMIT_LABEL}
                                         </Text>
                                     </SubmitButton>
                                 </SubmitButtonContainer>

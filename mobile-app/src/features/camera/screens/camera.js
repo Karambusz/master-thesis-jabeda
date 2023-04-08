@@ -5,6 +5,7 @@ import { CameraPreview } from "./camera-preview";
 import { Text } from "../../../components/typography/text";
 import { Button, View } from 'react-native';
 import { ReportProblemCamera, TakePhotoButtonContainer, TakePhotoButton } from "../components/camera.styles";
+import { CAMERA_PERMISSION_MESSAGE, PERMISSION_GRANT } from "../../../constants/constants";
 
 
 export const CameraScreen = ({ navigation }) => {
@@ -52,8 +53,8 @@ export const CameraScreen = ({ navigation }) => {
         // Camera permissions are not granted yet
         return (
             <View style={{flex: 1, justifyContent: 'center'}}>
-                <Text style={{ textAlign: 'center' }}>Aby zgłosić problem, musisz nadać dostęp do swojej kamery</Text>
-                <Button onPress={requestPermission} title="Nadaj pozwolenie" />
+                <Text style={{ textAlign: 'center' }}>{CAMERA_PERMISSION_MESSAGE}</Text>
+                <Button onPress={requestPermission} title={PERMISSION_GRANT} />
             </View>
         );
     }

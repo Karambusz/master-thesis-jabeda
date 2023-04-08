@@ -2,8 +2,7 @@ import React from "react";
 import { CameraPreviewButtonContainer, CameraPreviewButton } from "../components/camera-preview.styles";
 import { View, ImageBackground } from "react-native";
 import { Text } from "../../../components/typography/text";
-
-
+import {PHOTO_ACCEPT_MESSAGE, PHOTO_RETAKE_MESSAGE} from "../../../constants/constants";
 
 export const CameraPreview = ({ photo, retakePhoto, navigation }) => {
     return (
@@ -28,7 +27,7 @@ export const CameraPreview = ({ photo, retakePhoto, navigation }) => {
                     onPress={retakePhoto}
                 >
                     <Text variant="lightLabel">
-                        Znowu
+                        {PHOTO_RETAKE_MESSAGE}
                     </Text>
                 </CameraPreviewButton>
                 <CameraPreviewButton
@@ -41,7 +40,7 @@ export const CameraPreview = ({ photo, retakePhoto, navigation }) => {
                     }
                 >
                     <Text variant="lightLabel">
-                        Zgłoś
+                        {PHOTO_ACCEPT_MESSAGE}
                     </Text>
                 </CameraPreviewButton>
             </CameraPreviewButtonContainer>
