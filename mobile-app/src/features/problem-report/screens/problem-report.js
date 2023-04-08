@@ -20,10 +20,18 @@ import { toastConfig } from "../../main-menu/utility/main-screen-toast-config";
 import { Text } from "../../../components/typography/text";
 import {
     CATEGORY_ERROR_MESSAGE,
-    CATEGORY_LABEL, DESCRIPTION_LABEL, LOCATION_SEARCH_PLACEHOLDER,
+    CATEGORY_LABEL,
+    DESCRIPTION_LABEL,
+    LOCATION_SEARCH_PLACEHOLDER,
     MODAL_CLOSE_BUTTON_LABEL,
-    MODAL_DONE_BUTTON_LABEL, PROBLEM_ERROR_MESSAGE, PROBLEM_LABEL,
-    PROBLEM_TOAST_TEXT1_MESSAGE, PROBLEM_TOAST_TEXT2_MESSAGE, REPORT_PROBLEM_SUBMIT_LABEL
+    MODAL_DONE_BUTTON_LABEL,
+    PROBLEM_ERROR_MESSAGE,
+    PROBLEM_LABEL,
+    PROBLEM_TOAST_TEXT1_MESSAGE,
+    PROBLEM_TOAST_TEXT2_MESSAGE,
+    REPORT_PROBLEM_SUBMIT_LABEL,
+    SUBMIT_TOAST_TEXT1_MESSAGE,
+    SUBMIT_TOAST_TEXT2_MESSAGE
 } from "../../../constants/constants";
 
 export const selectValidator = (value, errorText = '') => {
@@ -145,7 +153,7 @@ export const ProblemReportScreen = ({route, navigation}) => {
                                             position: 'bottom',
                                             visibilityTime: 3000,
                                             autoHide: true,
-                                            bottomOffset: -60
+                                            bottomOffset: 30
                                         });
                                     }
                                 }}>
@@ -221,6 +229,15 @@ export const ProblemReportScreen = ({route, navigation}) => {
                                             setProblemList({ ...problemList, error: problemError });
                                             setDescriptionError(!(description && description.length > 0));
                                             if (categoryError || categoryError || descriptionError) {
+                                                Toast.show({
+                                                    type: 'error',
+                                                    text1: SUBMIT_TOAST_TEXT1_MESSAGE,
+                                                    text2: SUBMIT_TOAST_TEXT2_MESSAGE,
+                                                    position: 'top',
+                                                    visibilityTime: 3000,
+                                                    autoHide: true,
+                                                    topOffset: 30
+                                                });
                                                 return;
                                             }
                                             console.log("save");
