@@ -6,6 +6,7 @@ import { TransitionPresets } from "@react-navigation/stack";
 import { MainMenuScreen } from "../../features/main-menu/screens/main-menu";
 import { CameraScreen } from "../../features/camera/screens/camera";
 import { ProblemReportScreen } from "../../features/problem-report/screens/problem-report";
+import { ReportProblemSummaryScreen } from "../../features/problem-report-summary/screens/problem-report-summary";
 
 const AppStack = createNativeStackNavigator();
 
@@ -29,6 +30,10 @@ export const AppNavigator = () => {
                 <AppStack.Screen
                     name="ProblemReportScreen"
                     component={ProblemReportScreen}
+                />
+                <AppStack.Screen
+                    name="ReportProblemSummaryScreen"
+                    component={ReportProblemSummaryScreen}
                 />
             </AppStack.Navigator>
         </NavigationContainer>

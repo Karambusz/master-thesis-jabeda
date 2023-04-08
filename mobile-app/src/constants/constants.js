@@ -17,3 +17,6 @@ export const DESCRIPTION_LABEL = "Opis";
 export const REPORT_PROBLEM_SUBMIT_LABEL = "Zgłoś";
 export const CATEGORY_ERROR_MESSAGE = "Proszę wybrać kategorię";
 export const PROBLEM_ERROR_MESSAGE = "Proszę wybrać problem";
+export const PROBLEM_SUMMARY_SUCCESS_TITLE = "Udało się";
+export const PROBLEM_SUMMARY_SUCCESS_MESSAGE = "Zgłoszenie zostało wysłane!";
+export const GO_HOME_BUTTON_LABEL = "Powrót do strony głównej";

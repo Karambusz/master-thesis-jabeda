@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Spacer } from "../../../components/spacer/spacer";
 import { colors } from "../../../infrastructure/theme/colors";
-import {Background, BackgroundCover} from "../../../components/background/background";
+import { Background, BackgroundCover } from "../../../components/background/background";
 import {
     ImageWrapper,
     CompactImage,
@@ -16,8 +16,8 @@ import { TextInput } from 'react-native-paper';
 import { PaperSelect } from 'react-native-paper-select';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import Toast from "react-native-toast-message";
-import {toastConfig} from "../../main-menu/utility/main-screen-toast-config";
-import {Text} from "../../../components/typography/text";
+import { toastConfig } from "../../main-menu/utility/main-screen-toast-config";
+import { Text } from "../../../components/typography/text";
 import {
     CATEGORY_ERROR_MESSAGE,
     CATEGORY_LABEL, DESCRIPTION_LABEL, LOCATION_SEARCH_PLACEHOLDER,
@@ -35,7 +35,7 @@ export const selectValidator = (value, errorText = '') => {
 };
 
 const isAndroid = Platform.OS === "android";
-export const ProblemReportScreen = ({route}) => {
+export const ProblemReportScreen = ({route, navigation}) => {
     const { photo } = route.params;
     const Image = isAndroid ? CompactWebview : CompactImage;
     //TODO change when server will be ready
@@ -224,6 +224,9 @@ export const ProblemReportScreen = ({route}) => {
                                                 return;
                                             }
                                             console.log("save");
+                                            navigation.navigate("ReportProblemSummaryScreen", {
+                                                photo: photo
+                                            });
                                         }
                                         }
                                     >

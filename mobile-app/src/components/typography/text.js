@@ -28,7 +28,7 @@ const caption = (theme) => `
 
 const label = (theme) => `
     font-family: ${theme.fonts.heading};
-    font-size: ${theme.fontSizes.body};
+    font-size: ${theme.fontSizes.caption};
     font-weight: ${theme.fontWeights.medium};
 `;
 
@@ -39,13 +39,21 @@ const lightLabel = (theme) => `
     color: ${theme.colors.text.inverse}
 `;
 
+const headerLabel = (theme) => `
+    font-family: ${theme.fonts.heading};
+    font-size: ${theme.fontSizes.title};
+    font-weight: ${theme.fontWeights.bold};
+    color: ${theme.colors.text.primary}
+`;
+
 const variants = {
   body,
   label,
   caption,
   error,
   hint,
-  lightLabel
+  lightLabel,
+  headerLabel
 };
 
 export const Text = styled.Text`

@@ -1,25 +1,25 @@
 import styled from "styled-components/native";
 import WebView from "react-native-webview";
 import { Searchbar, Button } from "react-native-paper";
-import {colors} from "../../../infrastructure/theme/colors";
+import { colors } from "../../../infrastructure/theme/colors";
 
 export const CompactImage = styled.Image`
     resize-mode: cover;
     border-radius: 10px;
     width: 100%;
-    height: 240px;
+    height: 280px;
 `;
 
 export const CompactWebview = styled(WebView)`
     border-radius: 10px;
     width: 100%;
-    height: 240px;
+    height: 280px;
 `;
 
 
 export const ImageWrapper = styled.View`
     padding: 10px;
-    max-height: 240px;
+    max-height: 280px;
     align-items: center;
 `;
 
@@ -37,7 +37,7 @@ export const SubmitButtonContainer = styled.View`
 `;
 
 export const SubmitButton = styled(Button).attrs({
-    buttonColor: colors.brand.primary
+    buttonColor: colors.ui.success
 })`
   padding: ${(props) => props.theme.space[1]};
   width: 50%;

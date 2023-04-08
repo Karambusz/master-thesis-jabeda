@@ -11,7 +11,7 @@ export const colors = {
         quaternary: "#FFFFFF",
         disabled: "#DEDEDE",
         error: "#D0421B",
-        success: "#138000",
+        success: "#5cb85c",
     },
     bg: {
         primary: "#FFFFFF",
@@ -23,6 +23,6 @@ export const colors = {
         disabled: "#9C9C9C",
         inverse: "#FFFFFF",
         error: "#D0421B",
-        success: "#138000",
+        success: "#5cb85c",
     },
 };
