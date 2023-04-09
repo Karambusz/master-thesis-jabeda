@@ -11,12 +11,13 @@ import { Spacer } from "../spacer/spacer";
 const isAndroid = Platform.OS === "android";
 export const CompactProblemSummary = ({photo}) => {
     const Image = isAndroid ? CompactWebview : CompactImage;
+    const photoUri = photo && photo["uri"] ? photo["uri"] : 'https://reactnative.dev/img/tiny_logo.png';
 
     return (
         <CompactProblemSummaryWrapper >
             <ProblemImageWrapper>
                 <ImageWrapper>
-                    <Image source={{ uri: photo["uri"]}} />
+                    <Image source={{ uri: photoUri}} />
                 </ImageWrapper>
             </ProblemImageWrapper>
             <ProblemInformationWrapper>

@@ -59,7 +59,9 @@ export const ReportProblemSummaryScreen = ({route, navigation}) => {
                                 mode="contained"
                                 icon="home"
                                 onPress={() => {
-                                    navigation.navigate("MainMenuScreen");
+                                    navigation.navigate("MainMenuScreen", {
+                                        isHistoryExist: true
+                                    });
                                 }
                                 }
                             >

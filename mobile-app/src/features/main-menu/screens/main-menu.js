@@ -12,9 +12,9 @@ import {
     REPORT_PROBLEM_BUTTON_LABEL
 } from "../../../constants/constants";
 
-export const MainMenuScreen = ({navigation}) => {
+export const MainMenuScreen = ({navigation, route}) => {
 
-    const isHistoryExist = false; //TODO change during history development
+    const { isHistoryExist } = route.params ? route.params : false; //TODO change during history development
     return (
         <MainMenuBackground>
             <BackgroundCover/>
@@ -38,6 +38,7 @@ export const MainMenuScreen = ({navigation}) => {
                     style={[isHistoryExist ? styles.historyExist : styles.historyNotExist]}
                     labelStyle={{textAlign: "left"}}
                     onPress={() => {
+                        console.log(isHistoryExist);
                         if (!isHistoryExist) {
                             Toast.show({
                                 type: 'info',
@@ -50,7 +51,7 @@ export const MainMenuScreen = ({navigation}) => {
                             });
                         } else {
                             console.log("Pressed history")
-                            //TODO navigate to history screen
+                            navigation.navigate("HistoryScreen");
                         }
                     }}>
                     <Text variant="lightLabel">
