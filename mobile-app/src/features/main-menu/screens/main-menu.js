@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from 'react-redux';
 import { StyleSheet } from "react-native";
 import { Text } from "../../../components/typography/text";
 import { Spacer } from "../../../components/spacer/spacer";
@@ -14,6 +15,8 @@ import {
 
 export const MainMenuScreen = ({navigation, route}) => {
 
+    const initialState = useSelector(store => store.problems);
+    console.log(initialState);
     const { isHistoryExist } = route.params ? route.params : false; //TODO change during history development
     return (
         <MainMenuBackground>
