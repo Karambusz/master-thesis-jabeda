@@ -36,7 +36,7 @@ export const SubmitButtonContainer = styled.View`
   align-items: center;
 `;
 
-export const SubmitButton = styled(Button).attrs({
+export const ContinueButton = styled(Button).attrs({
     buttonColor: colors.ui.success
 })`
   padding: ${(props) => props.theme.space[1]};

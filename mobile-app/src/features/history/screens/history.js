@@ -13,7 +13,11 @@ export const HistoryScreen = () => {
             <SafeArea>
                 <FlatList data={exampleHistoryArray} renderItem={(item) => (
                     <>
-                        <CompactProblemSummary />
+                        <CompactProblemSummary
+                            problemCategory={"Mock history category"}
+                            problem={"Mock history problem"}
+                            location={"Mock history location"}
+                        />
                         <Spacer position="top" size="medium" />
                         <Spacer position="top" size="medium" />
                     </>

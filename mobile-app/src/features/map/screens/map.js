@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { Marker } from "react-native-maps";
 import { StyleSheet } from "react-native";
 import { requestForegroundPermissionsAsync, getCurrentPositionAsync } from 'expo-location';
@@ -19,18 +20,18 @@ import {
 } from "../components/map.styles";
 import { getAddressFromCoordinates } from "../../../services/utils/utils";
 import { GOOGLE_API_KEY } from "@env";
+import {setProblemLocation} from "../../../services/redux/actions/problem.actions";
 
 export const MapScreen = ({navigation}) => {
 
+    const dispatch = useDispatch();
     const [region, setRegion] = useState(null);
     const [marker, setMarker] = useState(null);
     const [selectedPlace, setSelectedPlace] = useState(null);
     const handleSelectPlace = (place, details = null) => {
         setSelectedPlace(place["description"]);
-        console.log(place);
         if (details !== null) {
             const { location, viewport } = details.geometry;
-            console.log(location);
             const { lat, lng } = location;
             const northeastLat = viewport.northeast.lat;
             const southwestLat = viewport.southwest.lat;
@@ -50,9 +51,7 @@ export const MapScreen = ({navigation}) => {
             const { granted } = await requestForegroundPermissionsAsync();
             if (granted) {
                 const { coords } = await getCurrentPositionAsync();
-                console.log(coords);
                 const { latitude, longitude } = coords;
-                console.log(GOOGLE_API_KEY);
                 getAddressFromCoordinates(latitude, longitude, GOOGLE_API_KEY)
                     .then(res => setSelectedPlace(res));
                 setRegion({
@@ -80,7 +79,11 @@ export const MapScreen = ({navigation}) => {
         <MapContainer>
             {region ? (
                 <>
-                    <Map region={region} onPress={handleMapPress}>
+                    <Map
+                        showsUserLocation={true}
+                        region={region}
+                        onPress={handleMapPress}
+                    >
                         {marker && <Marker coordinate={marker}/>}
                     </Map>
                     <SearchContainer >
@@ -111,7 +114,16 @@ export const MapScreen = ({navigation}) => {
                         <SubmitButton
                             mode="contained"
                             icon="send"
-                            onPress={() => navigation.navigate("ReportProblemSummaryScreen")}>
+                            onPress={() => {
+                                const location = {
+                                    fullAddress: selectedPlace,
+                                    latitude: region.latitude,
+                                    longitude: region.longitude
+                                };
+                                dispatch(setProblemLocation(location));
+                                navigation.navigate("ReportProblemSummaryScreen")
+                            }
+                            }>
                             <Text variant="lightLabel">
                                 {MAP_SUBMIT_LABEL}
                             </Text>

@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { SafeArea } from "../../../components/utils/safe-area";
 import { Text } from "../../../components/typography/text";
 import { Spacer } from "../../../components/spacer/spacer";
@@ -19,10 +19,13 @@ import {
     PROBLEM_SUMMARY_SUCCESS_MESSAGE,
     PROBLEM_SUMMARY_SUCCESS_TITLE,
 } from "../../../constants/constants";
+import {clearProblem} from "../../../services/redux/actions/problem.actions";
 
 
 export const ReportProblemSummaryScreen = ({ navigation }) => {
-    const { photo } = useSelector(state => state.problems);
+    const { photo, problemCategory, problem, location, problemDescription } = useSelector(state => state.problems);
+    const dispatch = useDispatch();
+
     return (
         <Background>
             <BackgroundCover />
@@ -43,7 +46,12 @@ export const ReportProblemSummaryScreen = ({ navigation }) => {
                     </HeaderContentWrapper>
                 </HeaderContainer>
                 <FooterWrapper>
-                    <CompactProblemSummary photo={photo}/>
+                    <CompactProblemSummary
+                        photo={photo}
+                        problemCategory={problemCategory}
+                        problem={problem}
+                        location={location.fullAddress}
+                    />
                     <Footer>
                         <Spacer position="top" size="medium" />
                         <Text variant="headerLabel">
@@ -51,7 +59,7 @@ export const ReportProblemSummaryScreen = ({ navigation }) => {
                         </Text>
                         <Spacer position="top" size="small" />
                         <Text>
-                            Zasady segregacji odpadów na pięć frakcji. Podręczna ściąga segrega bla bla bla.
+                            {problemDescription}
                         </Text>
                         <Spacer position="top" size="large" />
                         <Spacer position="top" size="large" />
@@ -60,6 +68,7 @@ export const ReportProblemSummaryScreen = ({ navigation }) => {
                                 mode="contained"
                                 icon="home"
                                 onPress={() => {
+                                    dispatch(clearProblem());
                                     navigation.navigate("MainMenuScreen", {
                                         isHistoryExist: true
                                     });

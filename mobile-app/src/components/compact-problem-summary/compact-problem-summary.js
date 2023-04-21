@@ -8,8 +8,9 @@ import {
 import { Text } from "../typography/text";
 import { Spacer } from "../spacer/spacer";
 
+
 const isAndroid = Platform.OS === "android";
-export const CompactProblemSummary = ({photo}) => {
+export const CompactProblemSummary = ({ photo, problem, problemCategory, location }) => {
     const Image = isAndroid ? CompactWebview : CompactImage;
     const photoUri = photo && photo["uri"] ? photo["uri"] : 'https://reactnative.dev/img/tiny_logo.png';
 
@@ -26,7 +27,7 @@ export const CompactProblemSummary = ({photo}) => {
                     </Text>
                     <Spacer position="top" size="small" />
                     <Text>
-                        ul.Reymonta 17
+                        {location}
                     </Text>
                     <Spacer position="top" size="medium" />
                     <Spacer position="top" size="medium" />
@@ -35,7 +36,7 @@ export const CompactProblemSummary = ({photo}) => {
                     </Text>
                     <Spacer position="top" size="small" />
                     <Text>
-                        Śmiecie i segregacja
+                        {problemCategory}
                     </Text>
                     <Spacer position="top" size="medium" />
                     <Spacer position="top" size="medium" />
@@ -44,7 +45,7 @@ export const CompactProblemSummary = ({photo}) => {
                     </Text>
                     <Spacer position="top" size="small" />
                     <Text>
-                        Przepełniony kosz uliczny
+                        {problem}
                     </Text>
             </ProblemInformationWrapper>
         </CompactProblemSummaryWrapper>
