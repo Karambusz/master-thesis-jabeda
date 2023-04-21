@@ -1,10 +1,13 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { CameraPreviewButtonContainer, CameraPreviewButton } from "../components/camera-preview.styles";
 import { View, ImageBackground } from "react-native";
 import { Text } from "../../../components/typography/text";
 import {PHOTO_ACCEPT_MESSAGE, PHOTO_RETAKE_MESSAGE} from "../../../constants/constants";
+import { setProblemPhoto } from "../../../services/redux/actions/problem.actions";
 
 export const CameraPreview = ({ photo, retakePhoto, navigation }) => {
+    const dispatch = useDispatch();
     return (
         <View
             style={{
@@ -34,10 +37,9 @@ export const CameraPreview = ({ photo, retakePhoto, navigation }) => {
                     mode="contained"
                     icon="send"
                     onPress={() => {
-                        navigation.navigate("ProblemReportScreen", {
-                            photo: photo
-                        })}
-                    }
+                        dispatch(setProblemPhoto(photo));
+                        navigation.navigate("ProblemReportScreen");
+                    }}
                 >
                     <Text variant="lightLabel">
                         {PHOTO_ACCEPT_MESSAGE}

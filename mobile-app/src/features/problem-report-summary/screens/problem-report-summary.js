@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { SafeArea } from "../../../components/utils/safe-area";
 import { Text } from "../../../components/typography/text";
 import { Spacer } from "../../../components/spacer/spacer";
@@ -20,8 +21,8 @@ import {
 } from "../../../constants/constants";
 
 
-export const ReportProblemSummaryScreen = ({route, navigation}) => {
-    const { photo } = route.params;
+export const ReportProblemSummaryScreen = ({ navigation }) => {
+    const { photo } = useSelector(state => state.problems);
     return (
         <Background>
             <BackgroundCover />

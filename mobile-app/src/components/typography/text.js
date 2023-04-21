@@ -46,6 +46,14 @@ const headerLabel = (theme) => `
     color: ${theme.colors.text.primary}
 `;
 
+const boldLabel = (theme) => `
+    font-family: ${theme.fonts.heading};
+    font-size: ${theme.fontSizes.title};
+    font-weight: ${theme.fontWeights.bold};
+    color: ${theme.colors.text.primary};
+    text-align: center;
+`;
+
 const variants = {
   body,
   label,
@@ -53,7 +61,8 @@ const variants = {
   error,
   hint,
   lightLabel,
-  headerLabel
+  headerLabel,
+  boldLabel
 };
 
 export const Text = styled.Text`

@@ -8,6 +8,7 @@ import { CameraScreen } from "../../features/camera/screens/camera";
 import { ProblemReportScreen } from "../../features/problem-report/screens/problem-report";
 import { ReportProblemSummaryScreen } from "../../features/problem-report-summary/screens/problem-report-summary";
 import { HistoryScreen } from "../../features/history/screens/history";
+import { MapScreen } from "../../features/map/screens/map";
 
 const AppStack = createNativeStackNavigator();
 
@@ -39,6 +40,10 @@ export const AppNavigator = () => {
                 <AppStack.Screen
                     name="ReportProblemSummaryScreen"
                     component={ReportProblemSummaryScreen}
+                />
+                <AppStack.Screen
+                    name="MapScreen"
+                    component={MapScreen}
                 />
             </AppStack.Navigator>
         </NavigationContainer>

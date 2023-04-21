@@ -1,0 +1,1 @@
+export const SET_PROBLEM_PHOTO = "SET_PROBLEM_PHOTO";
