@@ -1,7 +1,10 @@
 package edu.agh.jabeda.server.adapters.out.persistence.entity;
 
+import edu.agh.jabeda.server.domain.SupportedRole;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -24,6 +27,7 @@ public class RoleEntity {
     @Column(name = "idrole")
     private int idRole;
 
-    @Column(name = "rolename")
-    private String roleName;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "rolename", length = 20)
+    private SupportedRole roleName;
 }

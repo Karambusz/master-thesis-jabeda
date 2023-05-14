@@ -8,12 +8,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -26,9 +26,8 @@ import java.util.Set;
 public class SubscriberDataEntity {
 
     @Id
-    @OneToOne
-    @JoinColumn(name = "idsubscriber")
-    private SubscriberEntity subscriber;
+    @Column(name = "idsubscriber")
+    private int idSubscriber;
 
     @Column(name = "email")
     private String email;

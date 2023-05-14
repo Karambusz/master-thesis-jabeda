@@ -1,5 +1,6 @@
 package edu.agh.jabeda.server.adapters.out.persistence.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -29,7 +30,7 @@ public class SubscriberInfoEntity {
     @JoinColumn(name = "idsubscriber")
     private SubscriberEntity subscriber;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "idsubscriberaddress")
     private SubscriberAddressEntity subscriberAddress;
 

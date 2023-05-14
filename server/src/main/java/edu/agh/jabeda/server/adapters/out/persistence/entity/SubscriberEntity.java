@@ -1,5 +1,6 @@
 package edu.agh.jabeda.server.adapters.out.persistence.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -37,17 +38,17 @@ public class SubscriberEntity {
     @Column(name = "lastname")
     private String lastName;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "idsubscriber")
     private SubscriberDataEntity subscriberData;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "idsubscriber")
     private SubscriberInfoEntity subscriberInfo;
 
     @ManyToMany
     @JoinTable(name = "subcribercategory",
-    joinColumns = {@JoinColumn(name = "idsubscriber")},
-    inverseJoinColumns = {@JoinColumn(name = "idcategory")})
+            joinColumns = {@JoinColumn(name = "idsubscriber")},
+            inverseJoinColumns = {@JoinColumn(name = "idcategory")})
     private Set<CategoryEntity> categories = new HashSet<>();
 }
