@@ -1,4 +1,4 @@
-package edu.agh.jabeda.server.application.port.out.dto;
+package edu.agh.jabeda.server.adapters.in.web.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,6 +13,4 @@ public class ProblemDto {
     private int idProblem;
 
     private String problemName;
-
-    private CategoryDto category;
 }

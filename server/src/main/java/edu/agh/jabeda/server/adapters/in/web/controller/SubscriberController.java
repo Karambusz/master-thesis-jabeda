@@ -1,8 +1,8 @@
-package edu.agh.jabeda.server.adapters.in.web;
+package edu.agh.jabeda.server.adapters.in.web.controller;
 
-import edu.agh.jabeda.server.application.port.in.SubscriberUseCase;
+import edu.agh.jabeda.server.application.port.in.model.usecase.SubscriberUseCase;
 import edu.agh.jabeda.server.application.port.in.model.request.CreateSubscriberRequest;
-import edu.agh.jabeda.server.application.port.out.dto.SubscriberDto;
+import edu.agh.jabeda.server.adapters.in.web.dto.SubscriberDto;
 import edu.agh.jabeda.server.domain.Subscriber;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

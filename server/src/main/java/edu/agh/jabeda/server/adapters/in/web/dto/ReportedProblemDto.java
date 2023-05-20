@@ -1,4 +1,4 @@
-package edu.agh.jabeda.server.application.port.out.dto;
+package edu.agh.jabeda.server.adapters.in.web.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

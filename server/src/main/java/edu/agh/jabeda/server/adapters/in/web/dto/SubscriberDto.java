@@ -1,4 +1,4 @@
-package edu.agh.jabeda.server.application.port.out.dto;
+package edu.agh.jabeda.server.adapters.in.web.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,6 +21,6 @@ public class SubscriberDto {
 
     private SubscriberDataDto subscriberData;
 
-    private Set<CategoryDto> categories = new HashSet<>();
+    private Set<CategoryProductsDto> categories = new HashSet<>();
 
 }

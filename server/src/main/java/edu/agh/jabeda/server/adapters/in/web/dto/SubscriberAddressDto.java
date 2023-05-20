@@ -1,4 +1,4 @@
-package edu.agh.jabeda.server.application.port.out.dto;
+package edu.agh.jabeda.server.adapters.in.web.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,8 +9,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ReportedProblemAddressDto {
-    private int idReportedProblemAddress;
+public class SubscriberAddressDto {
+    private int idSubscriberAddress;
 
     private String country;
 
