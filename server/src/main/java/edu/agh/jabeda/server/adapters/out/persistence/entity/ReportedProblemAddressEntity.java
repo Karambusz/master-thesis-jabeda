@@ -24,17 +24,8 @@ public class ReportedProblemAddressEntity {
     @Column(name = "reportedproblemaddress")
     private int idReportedProblemAddress;
 
-    @Column(name = "country")
-    private String country;
-
-    @Column(name = "city")
-    private String city;
-
-    @Column(name = "street")
-    private String street;
-
-    @Column(name = "buildingnumber")
-    private String buildingNumber;
+    @Column(name = "address")
+    private String address;
 
     @Column(name = "latitude")
     private double latitude;

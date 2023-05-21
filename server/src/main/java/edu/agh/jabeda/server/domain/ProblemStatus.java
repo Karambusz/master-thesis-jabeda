@@ -15,4 +15,10 @@ public class ProblemStatus {
     private String statusName;
 
     private String statusCode;
+
+    public ProblemStatus(SupportedProblemStatus problemStatus){
+        this.idProblemStatus = problemStatus.getId();
+        this.statusName = problemStatus.getName();
+        this.statusCode = problemStatus.getCode();
+    }
 }

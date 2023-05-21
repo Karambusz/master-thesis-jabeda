@@ -26,7 +26,7 @@ public class ReportedProblemEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idreportedproblem")
-    private int idProblemStatus;
+    private int idReportedProblem;
 
     @Column(name = "reporteddatetime")
     private LocalDateTime reportedDateTime;
