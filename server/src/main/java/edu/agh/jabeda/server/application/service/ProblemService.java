@@ -16,6 +16,7 @@ import java.util.Collection;
 public class ProblemService implements ProblemUseCase {
     private final ProblemPort problemPort;
     private final CategoryMapper categoryMapper;
+
     @Override
     public Collection<Category> getProblems() {
         return problemPort.getProblems()
