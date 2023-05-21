@@ -1,10 +1,10 @@
 package edu.agh.jabeda.server.adapters.in.web.exception;
 
-import edu.agh.jabeda.server.domain.exception.CategoryNotFoundException;
 import edu.agh.jabeda.server.domain.exception.JabedaException;
+import edu.agh.jabeda.server.domain.exception.JabedaNotFoundException;
 import edu.agh.jabeda.server.domain.exception.RoleNotFoundException;
 import edu.agh.jabeda.server.domain.exception.SubscriberAlreadyExistsException;
-import edu.agh.jabeda.server.domain.exception.SubscriberNotFoundException;
+import edu.agh.jabeda.server.domain.exception.UserBannedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -22,25 +22,18 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(buildRestError(e), HttpStatus.CONFLICT);
     }
 
-    @ExceptionHandler({SubscriberNotFoundException.class})
+    @ExceptionHandler({JabedaNotFoundException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<JabedaRestError> handleSubscriberNotFoundException(
-            SubscriberNotFoundException e) {
-        return new ResponseEntity<>(buildRestError(e), HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler({RoleNotFoundException.class})
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<JabedaRestError> handleRoleNotFoundException(
+    public ResponseEntity<JabedaRestError> handleNotFoundException(
             RoleNotFoundException e) {
         return new ResponseEntity<>(buildRestError(e), HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler({CategoryNotFoundException.class})
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<JabedaRestError> handleCategoryNotFoundException(
-            CategoryNotFoundException e) {
-        return new ResponseEntity<>(buildRestError(e), HttpStatus.NOT_FOUND);
+    @ExceptionHandler({UserBannedException.class})
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ResponseEntity<JabedaRestError> handleUserBannedException(
+            RoleNotFoundException e) {
+        return new ResponseEntity<>(buildRestError(e), HttpStatus.FORBIDDEN);
     }
 
     private JabedaRestError buildRestError(JabedaException e) {
