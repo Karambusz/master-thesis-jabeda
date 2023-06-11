@@ -1,0 +1,28 @@
+@startuml
+'https://plantuml.com/component-diagram
+
+component [Aplikacja mobilna] as mapp
+component [Aplikacja webowa] as wapp
+component [Aplikacja serwerowa] as sapp
+component [ML serwer] as ml
+
+
+database "PostgreSQL" as db
+cloud {
+  [Aws S3]
+}
+
+sapp -up- HTTP
+
+wapp --> HTTP
+
+
+ml -- HTTp
+mapp -left-> HTTp
+mapp --> HTTP
+
+sapp -down-> db
+sapp -right-> [Aws S3]
+
+
+@enduml
