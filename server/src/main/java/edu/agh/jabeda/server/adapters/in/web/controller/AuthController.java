@@ -6,6 +6,13 @@ import edu.agh.jabeda.server.application.port.in.model.usecase.SubscriberUseCase
 import edu.agh.jabeda.server.application.port.in.model.request.CreateSubscriberRequest;
 import edu.agh.jabeda.server.application.port.in.model.response.JwtResponse;
 import edu.agh.jabeda.server.application.port.in.model.request.LoginRequest;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +32,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
-//@Tag(name = "Auth API", description = "Methods for user authentication")
+@Tag(name = "Auth API", description = "Methods for user authentication")
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequiredArgsConstructor
 @RestController
@@ -36,6 +43,13 @@ public class AuthController {
     private final JwtUtils jwtUtils;
     private final PasswordEncoder encoder;
 
+    @Operation(summary = "Sign In handling, JWT generation",
+            security = @SecurityRequirement(name = "Bearer Authentication"))
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Returns user's JWT",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = JwtResponse.class)) }),
+            @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content)})
     @PostMapping(value = "/signin", produces = "application/json")
     public ResponseEntity<JwtResponse> authenticateUser( @RequestBody LoginRequest loginRequest) {
         encoder.encode("password");
@@ -58,6 +72,14 @@ public class AuthController {
                 roles));
     }
 
+    @Operation(summary = "Sign Up handling",
+            security = @SecurityRequirement(name = "Bearer Authentication"))
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "User created",
+                    content = { @Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content)})
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody CreateSubscriberRequest signUpRequest) {
         return ResponseEntity.ok(subscriberUseCase.createSubscriber(signUpRequest));

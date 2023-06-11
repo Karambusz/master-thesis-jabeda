@@ -1,8 +1,15 @@
 package edu.agh.jabeda.server.adapters.in.web.controller;
 
+import edu.agh.jabeda.server.adapters.in.web.dto.CategoryProductsDto;
 import edu.agh.jabeda.server.adapters.in.web.dto.mapper.CategoryProductsDtoMapper;
 import edu.agh.jabeda.server.application.port.in.model.usecase.ProblemUseCase;
-import edu.agh.jabeda.server.adapters.in.web.dto.CategoryProductsDto;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,12 +17,22 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collection;
 
+@Tag(name = "Problem API", description = "Contains a set of problems and category related methods")
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/problems")
 public class ProblemController {
     private final ProblemUseCase problemUseCase;
 
+    @Operation(summary = "Get predefined problems and categories")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully returns existing problems",
+                    content = { @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = CategoryProductsDto.class)))}),
+            @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+            @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content)
+    })
     @GetMapping
     Collection<CategoryProductsDto> getProblems() {
         return CategoryProductsDtoMapper.create()
