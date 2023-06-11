@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class ReportedProblemAddress {
-    private int idSubscriberAddress;
+    private int idReportedProblemAddress;
 
     private String address;
 

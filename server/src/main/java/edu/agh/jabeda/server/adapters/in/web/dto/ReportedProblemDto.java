@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ReportedProblemDto {
-    private int idProblemStatus;
+    private int idReportedProblem;
 
     private LocalDateTime reportedDateTime;
 

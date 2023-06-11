@@ -28,7 +28,7 @@ public class ProblemController {
     @Operation(summary = "Get predefined problems and categories")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully returns existing problems",
-                    content = { @Content(mediaType = "application/json",
+                    content = {@Content(mediaType = "application/json",
                             array = @ArraySchema(schema = @Schema(implementation = CategoryProductsDto.class)))}),
             @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
             @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content)

@@ -12,16 +12,22 @@ import edu.agh.jabeda.server.adapters.out.persistence.repository.ReportedProblem
 import edu.agh.jabeda.server.adapters.out.persistence.repository.UserDeviceRepository;
 import edu.agh.jabeda.server.application.port.in.model.request.ReportProblemRequest;
 import edu.agh.jabeda.server.application.port.out.ReportedProblemPort;
+import edu.agh.jabeda.server.application.service.mapper.ReportedProblemMapper;
 import edu.agh.jabeda.server.common.PersistenceAdapter;
 import edu.agh.jabeda.server.domain.ProblemStatus;
+import edu.agh.jabeda.server.domain.ReportedProblem;
 import edu.agh.jabeda.server.domain.ReportedProblemAddress;
 import edu.agh.jabeda.server.domain.ReportedProblemId;
+import edu.agh.jabeda.server.domain.exception.CategoryNotFoundException;
 import edu.agh.jabeda.server.domain.exception.ProblemNotFoundException;
 import edu.agh.jabeda.server.domain.exception.UserBannedException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 
 @Slf4j
@@ -34,6 +40,7 @@ public class ReportedProblemPersistenceAdapter implements ReportedProblemPort {
 
     private final CategoryRepository categoryRepository;
     private final ReportedProblemAddressRepository reportedProblemAddressRepository;
+    private final ReportedProblemMapper reportedProblemMapper;
 
     @Override
     public ReportedProblemId reportProblem(ReportProblemRequest reportProblemRequest,
@@ -64,6 +71,22 @@ public class ReportedProblemPersistenceAdapter implements ReportedProblemPort {
         final var createdEntity = reportedProblemRepository.save(reportedProblemEntity);
 
         return new ReportedProblemId(createdEntity.getIdReportedProblem());
+    }
+
+    @Override
+    public Collection<ReportedProblem> getNewReportedProblemsByCategories(List<Integer> categories) {
+        final var reportedProblems = new ArrayList<ReportedProblem>();
+        categories.forEach(category -> {
+            final var categoryEntity = categoryRepository.findById(category);
+            if(categoryEntity.isPresent()) {
+                final var problemsEntity  =  reportedProblemRepository
+                        .getReportedProblemEntitiesByProblem_Category(categoryEntity.get());
+                reportedProblems.addAll(reportedProblemMapper.toReportedProblems(problemsEntity));
+            } else {
+                throw  new CategoryNotFoundException(String.valueOf(category));
+            }
+        });
+        return reportedProblems;
     }
 
     private ProblemStatusEntity getProblemStatusEntity(ProblemStatus problemStatus) {
