@@ -14,15 +14,16 @@ import org.mapstruct.ReportingPolicy;
 import org.springframework.stereotype.Component;
 
 @Component
-@Mapper(unmappedTargetPolicy = ReportingPolicy.ERROR, componentModel = "spring")
+@Mapper(unmappedTargetPolicy = ReportingPolicy.ERROR,
+        componentModel = "spring",
+        uses = {CategoryMapper.class,
+                SubscriberDataMapper.class})
 public interface SubscriberMapper {
     @Mapping(ignore = true, target = "subscriberData")
     Subscriber toSubscriber(SubscriberEntity entity);
-    SubscriberEntity toSubscriberEntity(Subscriber subscriber);
     SubscriberAddress toSubscriberAddress(SubscriberAddressEntity addressEntity);
     SubscriberAddressEntity toSubscriberAddressEntity(SubscriberAddress subscriberAddress);
     SubscriberDataEntity toSubscriberDataEntity(SubscriberData subscriberData);
-    SubscriberData toSubscriberData(SubscriberDataEntity dataEntity);
     @Mapping(ignore = true, target = "subscriber")
     SubscriberInfo toSubscriberInfo(SubscriberInfoEntity infoEntity);
     @Mapping(ignore = true, target = "subscriber")

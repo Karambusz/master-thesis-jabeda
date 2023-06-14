@@ -21,6 +21,6 @@ public class SubscriberDto {
 
     private SubscriberDataDto subscriberData;
 
-    private Set<CategoryProductsDto> categories = new HashSet<>();
+    private Set<CategoryProblemsDto> categories = new HashSet<>();
 
 }

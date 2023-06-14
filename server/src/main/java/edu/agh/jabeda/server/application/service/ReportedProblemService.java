@@ -3,7 +3,6 @@ package edu.agh.jabeda.server.application.service;
 import com.google.maps.model.LatLng;
 import edu.agh.jabeda.server.adapters.in.web.dto.ReportedProblemDto;
 import edu.agh.jabeda.server.application.port.in.model.request.ReportProblemRequest;
-import edu.agh.jabeda.server.application.port.in.model.request.ReportedProblemsByCategoriesRequest;
 import edu.agh.jabeda.server.application.port.in.model.usecase.ReportProblemUseCase;
 import edu.agh.jabeda.server.application.port.out.ReportedProblemPort;
 import edu.agh.jabeda.server.application.service.mapper.ReportedProblemMapper;
@@ -16,6 +15,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RequiredArgsConstructor
 @UseCase
@@ -37,9 +38,16 @@ public class ReportedProblemService implements ReportProblemUseCase {
     }
 
     @Override
-    public Collection<ReportedProblemDto> getNewReportedProblemsByCategories(ReportedProblemsByCategoriesRequest categories) {
-        return reportedProblemMapper.toReportedProblemDtos(
-                reportedProblemPort.getNewReportedProblemsByCategories(categories.getCategories())
-        );
+    public Collection<ReportedProblemDto> getNewReportedProblemsByCategories(
+            List<Integer> categories) {
+        if (categories.isEmpty()) {
+            return Collections.emptyList();
+        }
+        final var pendingProblems = reportedProblemPort
+                .getNewReportedProblemsByCategories(categories)
+                .stream()
+                .filter(problem -> problem.getProblemStatus().getIdProblemStatus() == SupportedProblemStatus.PENDING.getId())
+                .toList();
+        return reportedProblemMapper.toReportedProblemDtos(pendingProblems);
     }
 }

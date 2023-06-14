@@ -120,7 +120,7 @@ public class ReportedProblemPersistenceAdapter implements ReportedProblemPort {
         final var addressEntity = new ReportedProblemAddressEntity();
         addressEntity.setAddress(address.getAddress());
         addressEntity.setLatitude(address.getLatitude());
-        addressEntity.setLongitude(addressEntity.getLongitude());
+        addressEntity.setLongitude(address.getLongitude());
         return reportedProblemAddressRepository.save(addressEntity);
     }
 }

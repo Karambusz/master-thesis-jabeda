@@ -23,8 +23,4 @@ public class ReportedProblemDto {
     private ProblemDto problem;
 
     private ProblemStatusDto problemStatus;
-
-    private ReportedProblemSubscriberDto problemSubscriber;
-
-    private UserDeviceDto userDevice;
 }

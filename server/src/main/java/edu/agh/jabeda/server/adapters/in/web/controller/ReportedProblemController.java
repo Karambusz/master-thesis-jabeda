@@ -2,7 +2,6 @@ package edu.agh.jabeda.server.adapters.in.web.controller;
 
 import edu.agh.jabeda.server.adapters.in.web.dto.ReportedProblemDto;
 import edu.agh.jabeda.server.application.port.in.model.request.ReportProblemRequest;
-import edu.agh.jabeda.server.application.port.in.model.request.ReportedProblemsByCategoriesRequest;
 import edu.agh.jabeda.server.application.port.in.model.usecase.ReportProblemUseCase;
 import edu.agh.jabeda.server.domain.ReportedProblemId;
 import io.swagger.v3.oas.annotations.Operation;
@@ -18,9 +17,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+
 import java.util.Collection;
+import java.util.List;
 
 @Tag(name = "Reported Problem API", description = "Contains a set of reported problem related methods")
 @RequiredArgsConstructor
@@ -56,8 +58,7 @@ public class ReportedProblemController {
             @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content)
     })
     @GetMapping
-    Collection<ReportedProblemDto> getNewReportedProblemsByCategories(
-             @RequestBody ReportedProblemsByCategoriesRequest categories) {
+    Collection<ReportedProblemDto> getNewReportedProblemsByCategories(@Valid @RequestParam List<Integer> categories) {
         return reportProblemUseCase.getNewReportedProblemsByCategories(categories);
     }
 }

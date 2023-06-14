@@ -11,7 +11,7 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CategoryProductsDto {
+public class CategoryProblemsDto {
     private int idCategory;
 
     private String categoryName;

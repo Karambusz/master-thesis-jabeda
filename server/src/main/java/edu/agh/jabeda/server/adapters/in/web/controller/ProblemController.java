@@ -1,7 +1,7 @@
 package edu.agh.jabeda.server.adapters.in.web.controller;
 
-import edu.agh.jabeda.server.adapters.in.web.dto.CategoryProductsDto;
-import edu.agh.jabeda.server.adapters.in.web.dto.mapper.CategoryProductsDtoMapper;
+import edu.agh.jabeda.server.adapters.in.web.dto.CategoryProblemsDto;
+import edu.agh.jabeda.server.adapters.in.web.dto.mapper.CategoryProblemsDtoMapper;
 import edu.agh.jabeda.server.application.port.in.model.usecase.ProblemUseCase;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -29,13 +29,13 @@ public class ProblemController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully returns existing problems",
                     content = {@Content(mediaType = "application/json",
-                            array = @ArraySchema(schema = @Schema(implementation = CategoryProductsDto.class)))}),
+                            array = @ArraySchema(schema = @Schema(implementation = CategoryProblemsDto.class)))}),
             @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
             @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content)
     })
     @GetMapping
-    Collection<CategoryProductsDto> getProblems() {
-        return CategoryProductsDtoMapper.create()
+    Collection<CategoryProblemsDto> getProblems() {
+        return CategoryProblemsDtoMapper.create()
                 .mapFromDomain(problemUseCase.getProblems());
     }
 }

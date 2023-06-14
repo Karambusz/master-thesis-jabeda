@@ -17,7 +17,5 @@ public class Category {
 
     private String categoryName;
 
-    private Set<Subscriber> subscribers = new HashSet<>();
-
     private Set<Problem> problems = new HashSet<>();
 }

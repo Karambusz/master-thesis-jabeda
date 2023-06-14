@@ -11,6 +11,7 @@ import org.mapstruct.ReportingPolicy;
 @Mapper(unmappedTargetPolicy = ReportingPolicy.ERROR, componentModel = "spring")
 public interface CategoryMapper {
     Category toCategory(CategoryEntity entity);
+    @Mapping(ignore = true, target = "subscribers")
     CategoryEntity toCategoryEntity(Category category);
     @Mapping(ignore = true, target = "category")
     Problem toProblem(ProblemEntity problemEntity);
