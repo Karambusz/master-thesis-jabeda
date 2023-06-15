@@ -20,6 +20,7 @@ import edu.agh.jabeda.server.domain.ReportedProblemAddress;
 import edu.agh.jabeda.server.domain.ReportedProblemId;
 import edu.agh.jabeda.server.domain.exception.CategoryNotFoundException;
 import edu.agh.jabeda.server.domain.exception.ProblemNotFoundException;
+import edu.agh.jabeda.server.domain.exception.ReportedProblemNotFoundException;
 import edu.agh.jabeda.server.domain.exception.UserBannedException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -74,6 +75,13 @@ public class ReportedProblemPersistenceAdapter implements ReportedProblemPort {
     }
 
     @Override
+    public void updateProblemWithImageUrl(String imageUrl,  ReportedProblemId reportedProblemId) {
+        final var reportedProblemEntity = getReportedProblemEntityById(reportedProblemId);
+        reportedProblemEntity.setImageUrl(imageUrl);
+        reportedProblemRepository.save(reportedProblemEntity);
+    }
+
+    @Override
     public Collection<ReportedProblem> getNewReportedProblemsByCategories(List<Integer> categories) {
         final var reportedProblems = new ArrayList<ReportedProblem>();
         categories.forEach(category -> {
@@ -122,5 +130,13 @@ public class ReportedProblemPersistenceAdapter implements ReportedProblemPort {
         addressEntity.setLatitude(address.getLatitude());
         addressEntity.setLongitude(address.getLongitude());
         return reportedProblemAddressRepository.save(addressEntity);
+    }
+
+    private ReportedProblemEntity getReportedProblemEntityById(ReportedProblemId reportedProblemId) {
+        final var reportedProblemEntity = reportedProblemRepository.getReportedProblemEntityByIdReportedProblem(reportedProblemId.id());
+        if (reportedProblemEntity.isPresent()) {
+            return reportedProblemEntity.get();
+        }
+        throw new ReportedProblemNotFoundException(reportedProblemId.id());
     }
 }

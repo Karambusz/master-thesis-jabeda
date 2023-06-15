@@ -34,6 +34,9 @@ public class ReportedProblemEntity {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "imageurl")
+    private String imageUrl;
+
     @ManyToOne
     @JoinColumn(name = "reportedproblemaddress")
     private ReportedProblemAddressEntity reportedProblemAddress;

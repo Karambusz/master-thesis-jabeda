@@ -31,5 +31,6 @@ public interface ReportedProblemMapper {
     ReportedProblemDto toReportedProblemDto(ReportedProblem reportedProblem);
     @Mapping(ignore = true, target = "problemSubscriber")
     @Mapping(ignore = true, target = "userDevice")
+    @Mapping(ignore = true, target = "imageBase64")
     Collection<ReportedProblemDto> toReportedProblemDtos(Collection<ReportedProblem> reportedProblems);
 }

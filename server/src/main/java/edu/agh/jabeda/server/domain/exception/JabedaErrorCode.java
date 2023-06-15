@@ -7,7 +7,8 @@ public enum JabedaErrorCode {
     ROLE_NOT_FOUND("Role.NotFound"),
     SUBSCRIBER_NOT_FOUND("Subscriber.NotFound"),
     SUBSCRIBER_ALREADY_EXISTS("Subscriber.AlreadyExists"),
-    DEVICE_IS_BANNED("UserDevice.IsBanned");
+    DEVICE_IS_BANNED("UserDevice.IsBanned"),
+    REPORTED_PROBLEM_NOT_FOUND("ReportedProblem.NotFound");
 
     private final String errorCode;
 

@@ -18,6 +18,8 @@ public class ReportedProblem {
 
     private String description;
 
+    private String imageUrl;
+
     private ReportedProblemAddress reportedProblemAddress;
 
     private Problem problem;

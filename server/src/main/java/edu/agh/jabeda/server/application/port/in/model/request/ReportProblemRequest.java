@@ -16,4 +16,5 @@ public class ReportProblemRequest {
     private final LocalDateTime date;
     private final String address;
     private final String deviceId;
+    private final String imageBase64;
 }

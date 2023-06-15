@@ -18,6 +18,8 @@ public class ReportedProblemDto {
 
     private String description;
 
+    private String imageUrl;
+
     private ReportedProblemAddressDto reportedProblemAddress;
 
     private ProblemDto problem;
