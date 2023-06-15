@@ -38,7 +38,6 @@ public class ReportedProblemPersistenceAdapter implements ReportedProblemPort {
     private final UserDeviceRepository userDeviceRepository;
     private final ReportedProblemRepository reportedProblemRepository;
     private final ProblemStatusRepository problemStatusRepository;
-
     private final CategoryRepository categoryRepository;
     private final ReportedProblemAddressRepository reportedProblemAddressRepository;
     private final ReportedProblemMapper reportedProblemMapper;
@@ -95,6 +94,20 @@ public class ReportedProblemPersistenceAdapter implements ReportedProblemPort {
             }
         });
         return reportedProblems;
+    }
+
+    @Override
+    public Collection<ReportedProblem> getUserReportedProblemsHistory(String userDeviceId) {
+        return reportedProblemMapper.toReportedProblems(
+                reportedProblemRepository.getReportedProblemEntityByUserDevice_DeviceId(userDeviceId)
+        );
+    }
+
+    @Override
+    public Collection<ReportedProblem> getSubscriberReportedProblemsHistory(Integer subscriberId) {
+        return reportedProblemMapper.toReportedProblems(
+                reportedProblemRepository.getReportedProblemEntityBySubscriber(subscriberId)
+        );
     }
 
     private ProblemStatusEntity getProblemStatusEntity(ProblemStatus problemStatus) {

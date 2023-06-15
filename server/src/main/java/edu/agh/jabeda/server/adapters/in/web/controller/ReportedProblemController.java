@@ -5,6 +5,7 @@ import edu.agh.jabeda.server.application.port.in.model.request.ReportProblemRequ
 import edu.agh.jabeda.server.application.port.in.model.usecase.ReportProblemUseCase;
 import edu.agh.jabeda.server.domain.ReportedProblemId;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -47,18 +48,46 @@ public class ReportedProblemController {
         return reportProblemUseCase.reportProblem(reportProblemRequest);
     }
 
-
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Get all pending reported problems")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully returns  all pending reported problems",
                     content = { @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = ReportedProblemId.class)) }),
+                            array = @ArraySchema(schema = @Schema(implementation = ReportedProblemDto.class))) }),
             @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
             @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content)
     })
     @GetMapping
     Collection<ReportedProblemDto> getNewReportedProblemsByCategories(@Valid @RequestParam List<Integer> categories) {
         return reportProblemUseCase.getNewReportedProblemsByCategories(categories);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Get user reported problems history")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully returns all user reported problems",
+                    content = { @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = ReportedProblemDto.class))) }),
+            @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+            @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content)
+    })
+    @GetMapping(path="/user-history")
+    Collection<ReportedProblemDto> getUserReportedProblemsHistory(@Valid @RequestParam String userDeviceId) {
+        return reportProblemUseCase.getUserReportedProblemsHistory(userDeviceId);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Get subscriber reported problems history")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully returns all processed by subscriber reported problems",
+                    content = { @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = ReportedProblemDto.class))) }),
+            @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+            @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content)
+    })
+    @GetMapping(path="/subscriber-history")
+    Collection<ReportedProblemDto> getSubscriberReportedProblemsHistory(@Valid @RequestParam Integer subscriberId) {
+        return reportProblemUseCase.getSubscriberReportedProblemsHistory(subscriberId);
+
     }
 }

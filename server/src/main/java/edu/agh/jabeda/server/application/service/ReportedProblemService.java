@@ -62,4 +62,18 @@ public class ReportedProblemService implements ReportProblemUseCase {
                 .toList();
         return reportedProblemMapper.toReportedProblemDtos(pendingProblems);
     }
+
+    @Override
+    public Collection<ReportedProblemDto> getUserReportedProblemsHistory(String userDeviceId) {
+        return reportedProblemMapper.toReportedProblemDtos(
+                reportedProblemPort.getUserReportedProblemsHistory(userDeviceId)
+        );
+    }
+
+    @Override
+    public Collection<ReportedProblemDto> getSubscriberReportedProblemsHistory(Integer subscriberId) {
+        return reportedProblemMapper.toReportedProblemDtos(
+                reportedProblemPort.getSubscriberReportedProblemsHistory(subscriberId)
+        );
+    }
 }
