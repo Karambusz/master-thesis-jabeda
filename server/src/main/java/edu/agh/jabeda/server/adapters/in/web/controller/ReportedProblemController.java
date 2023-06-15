@@ -15,6 +15,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,7 +39,7 @@ public class ReportedProblemController {
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Create reported problem")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successfully returns an id of created reported problem",
+            @ApiResponse(responseCode = "201", description = "Successfully returns an id of created reported problem",
                     content = { @Content(mediaType = "application/json",
                     schema = @Schema(implementation = ReportedProblemId.class)) }),
             @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
@@ -46,6 +48,39 @@ public class ReportedProblemController {
     ReportedProblemId reportProblem(
             @Valid @RequestBody ReportProblemRequest reportProblemRequest) {
         return reportProblemUseCase.reportProblem(reportProblemRequest);
+    }
+
+    @PatchMapping(path = "/{reportedProblemId}/status")
+    @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Update reported problem status")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Successfully update reported problem status and assign subscriber to problem",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ReportedProblemDto.class)) }),
+            @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+            @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content)
+    })
+    ReportedProblemDto updateReportedProblemStatus(@PathVariable Integer reportedProblemId,
+             @RequestParam Integer problemStatusId,
+             @RequestParam Integer subscriberId
+    ) {
+        return reportProblemUseCase.updateReportedProblemStatus(reportedProblemId, problemStatusId, subscriberId);
+    }
+
+    @PatchMapping(path = "/users/{userDeviceId}/ban")
+    @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Ban user by device id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Successfully banned user by device id",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ReportedProblemDto.class)) }),
+            @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+            @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content)
+    })
+    void banUserByDeviceId(@PathVariable String userDeviceId) {
+        reportProblemUseCase.banUserByDeviceId(userDeviceId);
     }
 
     @ResponseStatus(HttpStatus.OK)

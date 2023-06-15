@@ -76,4 +76,17 @@ public class ReportedProblemService implements ReportProblemUseCase {
                 reportedProblemPort.getSubscriberReportedProblemsHistory(subscriberId)
         );
     }
+
+    @Override
+    public ReportedProblemDto updateReportedProblemStatus(Integer reportedProblemId, Integer problemStatusId,
+                                                          Integer subscriberId) {
+        return reportedProblemMapper.toReportedProblemDto(
+                reportedProblemPort.updateReportedProblemStatus(reportedProblemId, problemStatusId, subscriberId)
+        );
+    }
+
+    @Override
+    public void banUserByDeviceId(String userDeviceId) {
+        reportedProblemPort.banUserByDeviceId(userDeviceId);
+    }
 }

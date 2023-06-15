@@ -21,4 +21,8 @@ public interface ReportedProblemPort {
     Collection<ReportedProblem> getUserReportedProblemsHistory(String userDeviceId);
 
     Collection<ReportedProblem> getSubscriberReportedProblemsHistory(Integer subscriberId);
+
+    ReportedProblem updateReportedProblemStatus(Integer reportedProblemId, Integer problemStatusId, Integer subscriberId);
+
+    void banUserByDeviceId(String userDeviceId);
 }

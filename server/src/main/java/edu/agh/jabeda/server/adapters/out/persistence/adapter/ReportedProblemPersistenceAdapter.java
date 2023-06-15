@@ -4,11 +4,15 @@ import edu.agh.jabeda.server.adapters.out.persistence.entity.CategoryEntity;
 import edu.agh.jabeda.server.adapters.out.persistence.entity.ProblemStatusEntity;
 import edu.agh.jabeda.server.adapters.out.persistence.entity.ReportedProblemAddressEntity;
 import edu.agh.jabeda.server.adapters.out.persistence.entity.ReportedProblemEntity;
+import edu.agh.jabeda.server.adapters.out.persistence.entity.ReportedProblemSubscriberEntity;
+import edu.agh.jabeda.server.adapters.out.persistence.entity.SubscriberEntity;
 import edu.agh.jabeda.server.adapters.out.persistence.entity.UserDeviceEntity;
 import edu.agh.jabeda.server.adapters.out.persistence.repository.CategoryRepository;
 import edu.agh.jabeda.server.adapters.out.persistence.repository.ProblemStatusRepository;
 import edu.agh.jabeda.server.adapters.out.persistence.repository.ReportedProblemAddressRepository;
 import edu.agh.jabeda.server.adapters.out.persistence.repository.ReportedProblemRepository;
+import edu.agh.jabeda.server.adapters.out.persistence.repository.ReportedProblemSubscriberRepository;
+import edu.agh.jabeda.server.adapters.out.persistence.repository.SubscriberRepository;
 import edu.agh.jabeda.server.adapters.out.persistence.repository.UserDeviceRepository;
 import edu.agh.jabeda.server.application.port.in.model.request.ReportProblemRequest;
 import edu.agh.jabeda.server.application.port.out.ReportedProblemPort;
@@ -21,7 +25,9 @@ import edu.agh.jabeda.server.domain.ReportedProblemId;
 import edu.agh.jabeda.server.domain.exception.CategoryNotFoundException;
 import edu.agh.jabeda.server.domain.exception.ProblemNotFoundException;
 import edu.agh.jabeda.server.domain.exception.ReportedProblemNotFoundException;
+import edu.agh.jabeda.server.domain.exception.SubscriberNotFoundException;
 import edu.agh.jabeda.server.domain.exception.UserBannedException;
+import edu.agh.jabeda.server.domain.exception.UserDeviceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -39,6 +45,8 @@ public class ReportedProblemPersistenceAdapter implements ReportedProblemPort {
     private final ReportedProblemRepository reportedProblemRepository;
     private final ProblemStatusRepository problemStatusRepository;
     private final CategoryRepository categoryRepository;
+    private final SubscriberRepository subscriberRepository;
+    private final ReportedProblemSubscriberRepository problemSubscriberRepository;
     private final ReportedProblemAddressRepository reportedProblemAddressRepository;
     private final ReportedProblemMapper reportedProblemMapper;
 
@@ -49,7 +57,7 @@ public class ReportedProblemPersistenceAdapter implements ReportedProblemPort {
         final var reportedProblemEntity = new ReportedProblemEntity();
         reportedProblemEntity.setDescription(reportProblemRequest.getDescription());
         reportedProblemEntity.setReportedDateTime(reportProblemRequest.getDate());
-        reportedProblemEntity.setProblemStatus(getProblemStatusEntity(problemStatus));
+        reportedProblemEntity.setProblemStatus(getProblemStatusEntity(problemStatus.getIdProblemStatus()));
         final var categoryEntity = getCategory(reportProblemRequest.getCategory());
         final var problemEntity = categoryEntity.getProblems()
                 .stream()
@@ -75,7 +83,7 @@ public class ReportedProblemPersistenceAdapter implements ReportedProblemPort {
 
     @Override
     public void updateProblemWithImageUrl(String imageUrl,  ReportedProblemId reportedProblemId) {
-        final var reportedProblemEntity = getReportedProblemEntityById(reportedProblemId);
+        final var reportedProblemEntity = getReportedProblemEntityById(reportedProblemId.id());
         reportedProblemEntity.setImageUrl(imageUrl);
         reportedProblemRepository.save(reportedProblemEntity);
     }
@@ -110,8 +118,38 @@ public class ReportedProblemPersistenceAdapter implements ReportedProblemPort {
         );
     }
 
-    private ProblemStatusEntity getProblemStatusEntity(ProblemStatus problemStatus) {
-        return problemStatusRepository.getReferenceById(problemStatus.getIdProblemStatus());
+    @Override
+    public ReportedProblem updateReportedProblemStatus(Integer reportedProblemId,
+           Integer problemStatusId, Integer subscriberId) {
+        final var reportedProblemEntity = getReportedProblemEntityById(reportedProblemId);
+        final var subscriberEntity = getSubscriberEntityById(subscriberId);
+        reportedProblemEntity.setProblemStatus(getProblemStatusEntity(problemStatusId));
+        reportedProblemEntity.setProblemSubscriber(
+                createReportedProblemSubscriberEntity(reportedProblemEntity, subscriberEntity)
+        );
+        return reportedProblemMapper.toReportedProblem(
+                reportedProblemRepository.save(reportedProblemEntity)
+        );
+    }
+
+    @Override
+    public void banUserByDeviceId(String userDeviceId) {
+        final var userDeviceEntity = getUserDeviceEntity(userDeviceId);
+        userDeviceEntity.setBanned(true);
+        userDeviceEntity.setBanDate(LocalDateTime.now());
+        userDeviceRepository.save(userDeviceEntity);
+    }
+
+    private ReportedProblemSubscriberEntity createReportedProblemSubscriberEntity(
+            ReportedProblemEntity reportedProblem, SubscriberEntity subscriber) {
+        final var reportedProblemSubscriberEntity = new ReportedProblemSubscriberEntity();
+        reportedProblemSubscriberEntity.setReportedProblem(reportedProblem);
+        reportedProblemSubscriberEntity.setSubscriber(subscriber);
+        return problemSubscriberRepository.save(reportedProblemSubscriberEntity);
+    }
+
+    private ProblemStatusEntity getProblemStatusEntity(Integer problemStatusId) {
+        return problemStatusRepository.getReferenceById(problemStatusId);
     }
 
     private CategoryEntity getCategory(int categoryId) {
@@ -130,6 +168,15 @@ public class ReportedProblemPersistenceAdapter implements ReportedProblemPort {
         return createUserDeviceEntity(deviceId, dateTime);
     }
 
+    private UserDeviceEntity getUserDeviceEntity(String deviceId) {
+        final var userDeviceEntity = userDeviceRepository.getUserDeviceEntityByDeviceId(deviceId);
+
+        if (userDeviceEntity.isPresent()) {
+            return userDeviceEntity.get();
+        }
+        throw new UserDeviceNotFoundException(deviceId);
+    }
+
     private UserDeviceEntity createUserDeviceEntity(String deviceId, LocalDateTime dateTime) {
         final var userDeviceEntity = new UserDeviceEntity();
         userDeviceEntity.setDeviceId(deviceId);
@@ -145,11 +192,19 @@ public class ReportedProblemPersistenceAdapter implements ReportedProblemPort {
         return reportedProblemAddressRepository.save(addressEntity);
     }
 
-    private ReportedProblemEntity getReportedProblemEntityById(ReportedProblemId reportedProblemId) {
-        final var reportedProblemEntity = reportedProblemRepository.getReportedProblemEntityByIdReportedProblem(reportedProblemId.id());
+    private ReportedProblemEntity getReportedProblemEntityById(Integer reportedProblemId) {
+        final var reportedProblemEntity = reportedProblemRepository.getReportedProblemEntityByIdReportedProblem(reportedProblemId);
         if (reportedProblemEntity.isPresent()) {
             return reportedProblemEntity.get();
         }
-        throw new ReportedProblemNotFoundException(reportedProblemId.id());
+        throw new ReportedProblemNotFoundException(reportedProblemId);
+    }
+
+    private SubscriberEntity getSubscriberEntityById(Integer subscriberId) {
+        final var subscriberEntity = subscriberRepository.findById(subscriberId);
+        if (subscriberEntity.isPresent()) {
+            return subscriberEntity.get();
+        }
+        throw new SubscriberNotFoundException(subscriberId);
     }
 }
