@@ -33,7 +33,7 @@ export const CameraScreen = ({ navigation }) => {
     };
     const takePhoto = async () => {
         if (cameraRef) {
-            const photo = await cameraRef.current.takePictureAsync();
+            const photo = await cameraRef.current.takePictureAsync({base64: true});
             setPreviewVisible(true)
             setCapturedImage(photo);
         }

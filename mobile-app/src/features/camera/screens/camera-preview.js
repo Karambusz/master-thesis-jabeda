@@ -4,7 +4,7 @@ import { CameraPreviewButtonContainer, CameraPreviewButton } from "../components
 import { View, ImageBackground } from "react-native";
 import { Text } from "../../../components/typography/text";
 import {PHOTO_ACCEPT_MESSAGE, PHOTO_RETAKE_MESSAGE} from "../../../constants/constants";
-import { setProblemPhoto } from "../../../services/redux/actions/problem.actions";
+import { setProblemPhoto, sendPhotoToPredict } from "../../../services/redux/actions/problem.actions";
 
 export const CameraPreview = ({ photo, retakePhoto, navigation }) => {
     const dispatch = useDispatch();
@@ -38,6 +38,8 @@ export const CameraPreview = ({ photo, retakePhoto, navigation }) => {
                     icon="send"
                     onPress={() => {
                         dispatch(setProblemPhoto(photo));
+                        console.log(Object.keys(photo));
+                        dispatch(sendPhotoToPredict(photo.base64));
                         navigation.navigate("ProblemReportScreen");
                     }}
                 >

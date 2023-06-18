@@ -1,5 +1,5 @@
-import React from "react";
-import { useSelector } from 'react-redux';
+import React, {useEffect} from "react";
+import { useDispatch } from 'react-redux';
 import { StyleSheet } from "react-native";
 import { Text } from "../../../components/typography/text";
 import { Spacer } from "../../../components/spacer/spacer";
@@ -12,11 +12,13 @@ import {
     HISTORY_TOAST_TEXT1_MESSAGE, HISTORY_TOAST_TEXT2_MESSAGE,
     REPORT_PROBLEM_BUTTON_LABEL
 } from "../../../constants/constants";
+import {getCategoriesAndProblems} from "../../../services/redux/actions/problem.actions";
 
 export const MainMenuScreen = ({navigation, route}) => {
-
-    const initialState = useSelector(store => store.problems);
-    console.log(initialState);
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(getCategoriesAndProblems());
+    }, [])
     const { isHistoryExist } = route.params ? route.params : false; //TODO change during history development
     return (
         <MainMenuBackground>
@@ -41,7 +43,6 @@ export const MainMenuScreen = ({navigation, route}) => {
                     style={[isHistoryExist ? styles.historyExist : styles.historyNotExist]}
                     labelStyle={{textAlign: "left"}}
                     onPress={() => {
-                        console.log(isHistoryExist);
                         if (!isHistoryExist) {
                             Toast.show({
                                 type: 'info',

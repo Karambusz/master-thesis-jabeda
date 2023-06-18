@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import * as Application from 'expo-application';
 import { useDispatch } from "react-redux";
 import { Marker } from "react-native-maps";
 import { StyleSheet } from "react-native";
@@ -121,6 +122,9 @@ export const MapScreen = ({navigation}) => {
                                     longitude: region.longitude
                                 };
                                 dispatch(setProblemLocation(location));
+                                //TODO save problem here
+                                Application.getIosIdForVendorAsync()
+                                    .then(res => console.log(res));
                                 navigation.navigate("ReportProblemSummaryScreen")
                             }
                             }>
