@@ -71,7 +71,7 @@ def detect(save_img=False):
 
     t0 = time.time()
     response_dict = dict()
-    response_dict['isDetect'] = False
+    response_dict['isDetected'] = False
     for path, img, im0s, vid_cap in dataset:
         img = torch.from_numpy(img).to(device)
         img = img.half() if half else img.float()  # uint8 to fp16/32
