@@ -1,4 +1,4 @@
-import { CATEGORY_PREDICT_SERVER_URL } from "@env";
+import { CATEGORY_PREDICT_SERVER_URL, MAIN_SERVER_URL } from "@env";
 
 import {
     CLEAR_PROBLEM,
@@ -10,7 +10,8 @@ import {
     SET_PREDICTED_PROBLEM_CATEGORY,
     SET_PROBLEM_PREDICT_LOADING,
     SET_PROBLEMS,
-    SET_CATEGORIES
+    SET_CATEGORIES,
+    SET_PROBLEM_REPORTED_LOADING, SET_REPORTED_PROBLEM_HISTORY_LOADING, SET_REPORTED_PROBLEM_HISTORY
 } from "../types/problem.types";
 
 export const sendPhotoToPredict = photoBase64 => dispatch => {
@@ -27,7 +28,6 @@ export const sendPhotoToPredict = photoBase64 => dispatch => {
     })
         .then(res => res.json())
         .then(json => {
-            console.log(json);
             dispatch(setPredictedProblemCategory(json));
             dispatch(setProblemPredictLoading(false));
         })
@@ -39,7 +39,7 @@ export const sendPhotoToPredict = photoBase64 => dispatch => {
 }
 
 export const getCategoriesAndProblems = () => dispatch => {
-    fetch("http://192.168.1.3:8085/problems", {
+    fetch(MAIN_SERVER_URL + "/problems", {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -62,6 +62,45 @@ export const getCategoriesAndProblems = () => dispatch => {
         .catch(err => console.log(err));
 }
 
+export const reportProblem = reportedProblem => dispatch => {
+    dispatch(setProblemReportedLoading(true));
+    fetch(MAIN_SERVER_URL + "/reported-problems", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(reportedProblem)
+    })
+        .then(res => res.json())
+        .then(json => {
+            dispatch(setProblemReportedLoading(false));
+        })
+        .catch(err => {
+            console.log(err);
+            dispatch(setProblemReportedLoading(false, true));
+        });
+}
+
+export const getReportedProblemHistory = deviceId => dispatch => {
+    dispatch(setReportedProblemHistoryLoading(true));
+    fetch(MAIN_SERVER_URL + "/reported-problems/user-history?userDeviceId=" + deviceId, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+        .then(res => res.json())
+        .then(json => {
+            dispatch(setReportedProblemHistory(json));
+            dispatch(setReportedProblemHistoryLoading(false));
+        })
+        .catch(err => {
+            console.log(err);
+            dispatch(setReportedProblemHistory([]));
+            dispatch(setReportedProblemHistoryLoading(false));
+        });
+}
+
 export const setProblemPhoto = photo => ({
     type: SET_PROBLEM_PHOTO,
     photo
@@ -74,6 +113,22 @@ export const setPredictedProblemCategory = predictedProblemCategory => ({
 export const setProblemPredictLoading = isProblemPredictLoading => ({
     type: SET_PROBLEM_PREDICT_LOADING,
     isProblemPredictLoading
+})
+
+export const setProblemReportedLoading = (isProblemReportedLoading, isProblemReportedError = false) => ({
+    type: SET_PROBLEM_REPORTED_LOADING,
+    isProblemReportedLoading,
+    isProblemReportedError
+})
+
+export const setReportedProblemHistoryLoading = isReportedProblemHistoryLoading => ({
+    type: SET_REPORTED_PROBLEM_HISTORY_LOADING,
+    isReportedProblemHistoryLoading
+})
+
+export const setReportedProblemHistory = reportedProblemHistory => ({
+    type: SET_REPORTED_PROBLEM_HISTORY,
+    reportedProblemHistory
 })
 
 export const setCategories = categories => ({

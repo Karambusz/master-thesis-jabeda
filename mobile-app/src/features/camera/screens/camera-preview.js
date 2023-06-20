@@ -38,7 +38,6 @@ export const CameraPreview = ({ photo, retakePhoto, navigation }) => {
                     icon="send"
                     onPress={() => {
                         dispatch(setProblemPhoto(photo));
-                        console.log(Object.keys(photo));
                         dispatch(sendPhotoToPredict(photo.base64));
                         navigation.navigate("ProblemReportScreen");
                     }}

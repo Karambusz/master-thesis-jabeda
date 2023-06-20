@@ -8,7 +8,10 @@ import {
     SET_PREDICTED_PROBLEM_CATEGORY,
     SET_PROBLEM_PREDICT_LOADING,
     SET_PROBLEMS,
-    SET_CATEGORIES
+    SET_CATEGORIES,
+    SET_PROBLEM_REPORTED_LOADING,
+    SET_REPORTED_PROBLEM_HISTORY_LOADING,
+    SET_REPORTED_PROBLEM_HISTORY
 } from "../types/problem.types";
 
 const initialState = {
@@ -22,7 +25,11 @@ const initialState = {
     predictedProblemCategory: {},
     isProblemPredictLoading: false,
     categories: [],
-    problems: []
+    problems: [],
+    isProblemReportedLoading: false,
+    isProblemReportedError: false,
+    reportedProblemHistory: [],
+    isReportedProblemHistoryLoading: false
 }
 
 export default (state = initialState, action) => {
@@ -46,6 +53,22 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 isProblemPredictLoading: action.isProblemPredictLoading
+            }
+        case SET_PROBLEM_REPORTED_LOADING:
+            return {
+                ...state,
+                isProblemReportedLoading: action.isProblemReportedLoading,
+                isProblemReportedError: action. isProblemReportedError
+            }
+        case SET_REPORTED_PROBLEM_HISTORY_LOADING:
+            return {
+                ...state,
+                isReportedProblemHistoryLoading: action.isReportedProblemHistoryLoading
+            }
+        case SET_REPORTED_PROBLEM_HISTORY:
+            return {
+                ...state,
+                reportedProblemHistory: action.reportedProblemHistory
             }
         case SET_PROBLEM:
             return {
@@ -83,7 +106,9 @@ export default (state = initialState, action) => {
                 isProblemPredictLoading: false,
                 location: {
                     ...initialState.location
-                }
+                },
+                isProblemReportedLoading: false,
+                isProblemReportedError: false
             }
         default:
             return state;

@@ -1,3 +1,4 @@
+import { MaterialIcons, AntDesign, Ionicons } from '@expo/vector-icons';
 export const CAMERA_PERMISSION_MESSAGE = "Aby zgłosić problem, musisz nadać dostęp do swojej kamery";
 export const PERMISSION_GRANT = "Nadaj pozwolenie";
 export const PHOTO_RETAKE_MESSAGE = "Znowu";
@@ -22,8 +23,19 @@ export const CATEGORY_ERROR_MESSAGE = "Proszę wybrać kategorię";
 export const PROBLEM_ERROR_MESSAGE = "Proszę wybrać problem";
 export const PROBLEM_SUMMARY_SUCCESS_TITLE = "Udało się";
 export const PROBLEM_SUMMARY_SUCCESS_MESSAGE = "Zgłoszenie zostało wysłane!";
+export const PROBLEM_SUMMARY_ERROR_TITLE = "Coś poszło nie tak";
+export const PROBLEM_SUMMARY_ERROR_MESSAGE = "Spróbuj wysłać zgłoszenie później!";
 export const GO_HOME_BUTTON_LABEL = "Powrót do strony głównej";
 
+export const CATEGORY_PREDICTION_HELPER_TEXT = "Sprawdź czy kategoria została prawidłowo zidentyfikowana (jeżeli nie, ustaw poprawną kategorię)!";
 export const CATEGORY_TRANSLATED_VALUES = {
     "Garbage and segregation": "Śmiecie i segregacja"
+}
+
+export const STATUSES_MAP = {
+    "Pending": <MaterialIcons name="pending" size={14} color="black" />,
+    "Accepted": <AntDesign name="checkcircle" size={14} color="black" />,
+    "Rejected": <AntDesign name="closecircle" size={14} color="black" />,
+    "Done": <Ionicons name="checkmark-done-circle" size={14} color="black" />,
+    "Reported": <MaterialIcons name="report" size={14} color="black" />
 }

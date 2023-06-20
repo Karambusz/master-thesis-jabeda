@@ -32,9 +32,10 @@ import {
     REPORT_PROBLEM_SUBMIT_LABEL,
     SUBMIT_TOAST_TEXT1_MESSAGE,
     SUBMIT_TOAST_TEXT2_MESSAGE,
-    CATEGORY_TRANSLATED_VALUES
+    CATEGORY_TRANSLATED_VALUES, CATEGORY_PREDICTION_HELPER_TEXT
 } from "../../../constants/constants";
-import {setProblem, setProblemCategory, setProblemDescription} from "../../../services/redux/actions/problem.actions";
+import { setProblem, setProblemCategory, setProblemDescription } from "../../../services/redux/actions/problem.actions";
+import * as Application from "expo-application";
 
 export const selectValidator = (value, errorText = '') => {
     if (!value || value.length <= 0) {
@@ -50,7 +51,6 @@ export const ProblemReportScreen = ({navigation}) => {
         isProblemPredictLoading, categories, problems } = useSelector(state => state.problems);
     const dispatch = useDispatch();
     const Image = isAndroid ? CompactWebview : CompactImage;
-    //TODO set category and problems if model detect some category
     const [isProblemListDisabled, setProblemListDisabled] = useState(true);
     const [categoryList, setCategoryList] = useState({
         value: problemCategory,
@@ -66,10 +66,10 @@ export const ProblemReportScreen = ({navigation}) => {
         error: '',
     });
     const [descriptionError, setDescriptionError] = useState(false);
+    const [categoryId, setCategoryId] = useState(0);
+    const [problemId, setProblemId] = useState(0);
 
     useEffect(() => {
-        console.log("use effect problem report screen");
-        console.log(predictedProblemCategory);
         if (Object.keys(predictedProblemCategory).length > 0 && predictedProblemCategory.isDetected) {
             const categoryName = CATEGORY_TRANSLATED_VALUES[predictedProblemCategory.category];
             const selectedCategory = categories.filter(category => category.value === categoryName);
@@ -117,8 +117,8 @@ export const ProblemReportScreen = ({navigation}) => {
                                         <Spacer position="top" size="medium" />
                                         <Spacer position="top" size="medium" />
                                         <View
-                                            style={{padding: 10}
-                                        }>
+                                            style={{padding: 10}}
+                                        >
                                             <PaperSelect
                                                 label={CATEGORY_LABEL}
                                                 value={problemCategory}
@@ -132,7 +132,6 @@ export const ProblemReportScreen = ({navigation}) => {
                                                         selectedList: value.selectedList,
                                                         error: '',
                                                     });
-                                                    console.log(value);
                                                     if (value.selectedList.length > 0) {
                                                         const categoryName = value.selectedList[0].value;
                                                         const filteredProblems = problems.filter(problem => Object.keys(problem)[0] === categoryName);
@@ -141,6 +140,7 @@ export const ProblemReportScreen = ({navigation}) => {
                                                             list: filteredProblems[0][categoryName],
                                                         });
                                                         setProblemListDisabled(false);
+                                                        setCategoryId(parseInt(value.selectedList[0]._id));
                                                     } else {
                                                         setProblemList({
                                                             ...problemList,
@@ -166,6 +166,9 @@ export const ProblemReportScreen = ({navigation}) => {
                                                 modalDoneButtonText={MODAL_DONE_BUTTON_LABEL}
                                                 dialogButtonLabelStyle={{color: colors.brand.primary}}
                                             />
+                                            <Text variant="error">
+                                                {CATEGORY_PREDICTION_HELPER_TEXT}
+                                            </Text>
                                             <Spacer position="top" size="medium" />
                                             <Spacer position="top" size="medium" />
                                             <TouchableWithoutFeedback onPress={() => {
@@ -194,6 +197,7 @@ export const ProblemReportScreen = ({navigation}) => {
                                                                 selectedList: value.selectedList,
                                                                 error: '',
                                                             });
+                                                            setProblemId(parseInt(value.selectedList[0]._id));
                                                         }}
                                                         arrayList={[...problemList.list]}
                                                         selectedArrayList={[...problemList.selectedList]}
@@ -239,7 +243,7 @@ export const ProblemReportScreen = ({navigation}) => {
                                                         setCategoryList({ ...categoryList, error: categoryError });
                                                         setProblemList({ ...problemList, error: problemError });
                                                         setDescriptionError(!(problemDescription && problemDescription.length > 0));
-                                                        if (categoryError || categoryError || (!(problemDescription && problemDescription.length > 0))) {
+                                                        if (categoryError || problemError || (!(problemDescription && problemDescription.length > 0))) {
                                                             Toast.show({
                                                                 type: 'error',
                                                                 text1: SUBMIT_TOAST_TEXT1_MESSAGE,
@@ -251,9 +255,20 @@ export const ProblemReportScreen = ({navigation}) => {
                                                             });
                                                             return;
                                                         }
-                                                        console.log("save");
-                                                        // navigation.navigate("ReportProblemSummaryScreen");
-                                                        navigation.navigate("MapScreen");
+                                                        Application.getIosIdForVendorAsync()
+                                                            .then(deviceId => {
+                                                                const reportedProblem = {
+                                                                    category: categoryId,
+                                                                    problem: problemId,
+                                                                    description: problemDescription,
+                                                                    date: new Date().toISOString().replace(/.\d+Z$/g, "Z"),
+                                                                    deviceId: deviceId,
+                                                                    imageBase64: photo.base64
+                                                                };
+                                                                navigation.navigate("MapScreen", {
+                                                                    reportedProblem: reportedProblem
+                                                                });
+                                                            });
                                                     }
                                                     }
                                                 >
