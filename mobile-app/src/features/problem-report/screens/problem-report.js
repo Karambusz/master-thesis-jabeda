@@ -81,6 +81,7 @@ export const ProblemReportScreen = ({navigation}) => {
                 selectedList: selectedCategory,
                 error: '',
             });
+            setCategoryId(selectedCategory[0]._id);
             const filteredProblems = problems.filter(problem => Object.keys(problem)[0] === categoryName);
             setProblemList({
                 ...problemList,
