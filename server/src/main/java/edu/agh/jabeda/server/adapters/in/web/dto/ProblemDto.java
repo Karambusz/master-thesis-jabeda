@@ -13,4 +13,6 @@ public class ProblemDto {
     private int idProblem;
 
     private String problemName;
+
+    private String category;
 }

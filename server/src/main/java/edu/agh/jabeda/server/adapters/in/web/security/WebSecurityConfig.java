@@ -4,8 +4,7 @@ import edu.agh.jabeda.server.adapters.in.web.security.jwt.AuthEntryPointJwt;
 import edu.agh.jabeda.server.adapters.in.web.security.jwt.AuthTokenFilter;
 import edu.agh.jabeda.server.adapters.in.web.security.services.DefaultUserDetailsService;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,12 +23,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class WebSecurityConfig {
 
+    @Autowired
     private final AuthEntryPointJwt unauthorizedHandler;
 
+    @Autowired
     private final DefaultUserDetailsService userDetailsService;
-
-    private static final Logger logger = LoggerFactory.getLogger(AuthTokenFilter.class);
-
 
     @Bean
     public AuthTokenFilter authenticationJwtTokenFilter() {

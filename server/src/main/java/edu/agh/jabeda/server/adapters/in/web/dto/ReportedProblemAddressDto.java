@@ -12,6 +12,8 @@ import lombok.Setter;
 public class ReportedProblemAddressDto {
     private int idReportedProblemAddress;
 
+    private String address;
+
     private double latitude;
 
     private double longitude;

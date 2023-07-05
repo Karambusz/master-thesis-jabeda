@@ -9,10 +9,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Problem {
+public class BasicProblem {
     private int idProblem;
 
     private String problemName;
-
-    private BasicCategory category;
 }

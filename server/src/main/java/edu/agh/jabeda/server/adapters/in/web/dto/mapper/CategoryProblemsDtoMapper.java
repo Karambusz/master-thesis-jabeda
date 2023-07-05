@@ -2,8 +2,8 @@ package edu.agh.jabeda.server.adapters.in.web.dto.mapper;
 
 import edu.agh.jabeda.server.adapters.in.web.dto.CategoryProblemsDto;
 import edu.agh.jabeda.server.adapters.in.web.dto.ProblemDto;
+import edu.agh.jabeda.server.domain.BasicProblem;
 import edu.agh.jabeda.server.domain.Category;
-import edu.agh.jabeda.server.domain.Problem;
 
 import java.util.Collection;
 import java.util.Set;
@@ -31,11 +31,11 @@ public class CategoryProblemsDtoMapper {
         return categoryProductsDto;
     }
 
-    private Set<ProblemDto> mapProblemsFromDomain(Collection<Problem> problems) {
+    private Set<ProblemDto> mapProblemsFromDomain(Collection<BasicProblem> problems) {
         return problems.stream().map(this::mapFromDomain).collect(Collectors.toSet());
     }
 
-    private ProblemDto mapFromDomain(Problem problem) {
+    private ProblemDto mapFromDomain(BasicProblem problem) {
         final var problemDto = new ProblemDto();
         problemDto.setIdProblem(problem.getIdProblem());
         problemDto.setProblemName(problem.getProblemName());
