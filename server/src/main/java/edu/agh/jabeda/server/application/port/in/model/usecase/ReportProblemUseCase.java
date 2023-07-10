@@ -11,7 +11,7 @@ public interface ReportProblemUseCase {
 
     ReportedProblemId reportProblem(ReportProblemRequest reportProblemRequest);
 
-    Collection<ReportedProblemDto> getNewReportedProblemsByCategories(List<Integer> categories);
+    Collection<ReportedProblemDto> getNewReportedProblemsByCategories(List<String> categories);
     Collection<ReportedProblemDto> getUserReportedProblemsHistory(String userDeviceId);
     Collection<ReportedProblemDto> getSubscriberReportedProblemsHistory(Integer subscriberId);
     ReportedProblemDto updateReportedProblemStatus(Integer reportedProblemId, Integer problemStatusId, Integer subscriberId);

@@ -24,5 +24,7 @@ public class ReportedProblemDto {
 
     private ProblemDto problem;
 
-    private ProblemStatusDto problemStatus;
+    private String problemStatusCode;
+
+    private String userDeviceId;
 }

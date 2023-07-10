@@ -51,7 +51,7 @@ public class ReportedProblemService implements ReportProblemUseCase {
 
     @Override
     public Collection<ReportedProblemDto> getNewReportedProblemsByCategories(
-            List<Integer> categories) {
+            List<String> categories) {
         if (categories.isEmpty()) {
             return Collections.emptyList();
         }

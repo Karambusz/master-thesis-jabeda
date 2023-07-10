@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,6 +31,7 @@ import java.util.List;
 @Tag(name = "Reported Problem API", description = "Contains a set of reported problem related methods")
 @RequiredArgsConstructor
 @RestController
+@CrossOrigin
 @RequestMapping("/reported-problems")
 public class ReportedProblemController {
 
@@ -93,8 +95,8 @@ public class ReportedProblemController {
             @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content)
     })
     @GetMapping
-    Collection<ReportedProblemDto> getNewReportedProblemsByCategories(@Valid @RequestParam List<Integer> categories) {
-        return reportProblemUseCase.getNewReportedProblemsByCategories(categories);
+    Collection<ReportedProblemDto> getNewReportedProblemsByCategories(@Valid @RequestParam List<String> category) {
+        return reportProblemUseCase.getNewReportedProblemsByCategories(category);
     }
 
     @ResponseStatus(HttpStatus.OK)

@@ -16,7 +16,7 @@ public interface ReportedProblemPort {
 
     void updateProblemWithImageUrl(String imageUrl, ReportedProblemId reportedProblemId);
 
-    Collection<ReportedProblem> getNewReportedProblemsByCategories(List<Integer> categories);
+    Collection<ReportedProblem> getNewReportedProblemsByCategories(List<String> categories);
 
     Collection<ReportedProblem> getUserReportedProblemsHistory(String userDeviceId);
 

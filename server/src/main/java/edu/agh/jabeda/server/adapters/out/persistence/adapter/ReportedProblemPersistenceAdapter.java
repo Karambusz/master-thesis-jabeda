@@ -89,10 +89,10 @@ public class ReportedProblemPersistenceAdapter implements ReportedProblemPort {
     }
 
     @Override
-    public Collection<ReportedProblem> getNewReportedProblemsByCategories(List<Integer> categories) {
+    public Collection<ReportedProblem> getNewReportedProblemsByCategories(List<String> categories) {
         final var reportedProblems = new ArrayList<ReportedProblem>();
         categories.forEach(category -> {
-            final var categoryEntity = categoryRepository.findById(category);
+            final var categoryEntity = categoryRepository.findFirstByCategoryName(category);
             if(categoryEntity.isPresent()) {
                 final var problemsEntity  =  reportedProblemRepository
                         .getReportedProblemEntitiesByProblem_Category(categoryEntity.get());
