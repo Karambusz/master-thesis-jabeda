@@ -7,8 +7,18 @@ export const HeaderContainer = styled.View`
   padding: 10px;
 `;
 
-export const HeaderContentWrapper = styled.View`
+export const HeaderSuccessContentWrapper = styled.View`
   background-color: ${(props) => props.theme.colors.ui.success};
+  border-radius: 4px;
+  height: 45px;
+  padding: 4px;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const HeaderErrorContentWrapper = styled.View`
+  background-color: ${(props) => props.theme.colors.ui.error};
   border-radius: 4px;
   height: 45px;
   padding: 4px;

@@ -20,10 +20,11 @@ import {
 } from "../components/map.styles";
 import { getAddressFromCoordinates } from "../../../services/utils/utils";
 import { GOOGLE_API_KEY } from "@env";
-import {setProblemLocation} from "../../../services/redux/actions/problem.actions";
+import { setProblemLocation, reportProblem} from "../../../services/redux/actions/problem.actions";
 
-export const MapScreen = ({navigation}) => {
+export const MapScreen = ({ navigation, route }) => {
 
+    const {reportedProblem} = route.params;
     const dispatch = useDispatch();
     const [region, setRegion] = useState(null);
     const [marker, setMarker] = useState(null);
@@ -121,6 +122,11 @@ export const MapScreen = ({navigation}) => {
                                     longitude: region.longitude
                                 };
                                 dispatch(setProblemLocation(location));
+                                const reportedProblemObj = {
+                                    ...reportedProblem,
+                                    address: selectedPlace
+                                }
+                                dispatch(reportProblem(reportedProblemObj));
                                 navigation.navigate("ReportProblemSummaryScreen")
                             }
                             }>
