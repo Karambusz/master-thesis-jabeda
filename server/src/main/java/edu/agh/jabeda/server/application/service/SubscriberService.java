@@ -1,7 +1,6 @@
 package edu.agh.jabeda.server.application.service;
 
 import com.google.maps.model.LatLng;
-import edu.agh.jabeda.server.adapters.in.web.dto.SubscriberDto;
 import edu.agh.jabeda.server.application.port.in.model.request.CreateSubscriberRequest;
 import edu.agh.jabeda.server.application.port.in.model.request.UpdateSubscriberRequest;
 import edu.agh.jabeda.server.application.port.in.model.usecase.SubscriberUseCase;
@@ -12,9 +11,6 @@ import edu.agh.jabeda.server.domain.Subscriber;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
-import java.util.Collection;
-import java.util.HashSet;
-
 @RequiredArgsConstructor
 @UseCase
 @Transactional
@@ -23,11 +19,6 @@ public class SubscriberService implements SubscriberUseCase {
     private final SubscriberMapper subscriberMapper;
     private final GeocodingHelper geocodingHelper;
 
-    @Override
-    public Collection<SubscriberDto> getSubscribers() {
-        Collection<Subscriber> subscribers = subscriberPort.getSubscribers();
-        return new HashSet<>();
-    }
 
     @Override
     public Subscriber createSubscriber(CreateSubscriberRequest body) {

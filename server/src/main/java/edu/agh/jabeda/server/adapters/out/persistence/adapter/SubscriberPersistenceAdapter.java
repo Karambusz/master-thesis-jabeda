@@ -15,7 +15,6 @@ import edu.agh.jabeda.server.application.port.in.model.request.CreateSubscriberR
 import edu.agh.jabeda.server.application.port.in.model.request.UpdateSubscriberRequest;
 import edu.agh.jabeda.server.application.port.out.SubscriberPort;
 import edu.agh.jabeda.server.common.PersistenceAdapter;
-import edu.agh.jabeda.server.domain.Subscriber;
 import edu.agh.jabeda.server.domain.SupportedRole;
 import edu.agh.jabeda.server.domain.exception.CategoryNotFoundException;
 import edu.agh.jabeda.server.domain.exception.RoleNotFoundException;
@@ -42,11 +41,6 @@ public class SubscriberPersistenceAdapter implements SubscriberPort {
     private final RoleRepository roleRepository;
     private final PasswordEncoder encoder;
     private final AuthenticationManager authenticationManager;
-
-    @Override
-    public Collection<Subscriber> getSubscribers() {
-        return null;
-    }
 
     @Override
     public SubscriberEntity createSubscriber(CreateSubscriberRequest body, LatLng latLng) {
