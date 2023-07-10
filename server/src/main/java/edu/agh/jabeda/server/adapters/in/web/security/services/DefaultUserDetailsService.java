@@ -1,7 +1,7 @@
 package edu.agh.jabeda.server.adapters.in.web.security.services;
 
 import edu.agh.jabeda.server.application.port.in.model.usecase.AuthUseCase;
-import edu.agh.jabeda.server.domain.SubscriberData;
+import edu.agh.jabeda.server.domain.Subscriber;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,7 +16,7 @@ public class DefaultUserDetailsService implements UserDetailsService {
     private final AuthUseCase authUseCase;
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        SubscriberData user = authUseCase.loadUserByEmail(email);
+        Subscriber user = authUseCase.loadUserByEmail(email);
         return DefaultUserDetails.build(user);
     }
 }

@@ -1,10 +1,10 @@
 package edu.agh.jabeda.server.adapters.out.persistence.adapter;
 
-import edu.agh.jabeda.server.adapters.out.persistence.repository.SubscriberDataRepository;
+import edu.agh.jabeda.server.adapters.out.persistence.repository.SubscriberRepository;
 import edu.agh.jabeda.server.application.port.out.AuthPort;
-import edu.agh.jabeda.server.application.service.mapper.SubscriberDataMapper;
+import edu.agh.jabeda.server.application.service.mapper.SubscriberMapper;
 import edu.agh.jabeda.server.common.PersistenceAdapter;
-import edu.agh.jabeda.server.domain.SubscriberData;
+import edu.agh.jabeda.server.domain.Subscriber;
 import edu.agh.jabeda.server.domain.exception.SubscriberNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,14 +14,14 @@ import lombok.extern.slf4j.Slf4j;
 @PersistenceAdapter
 public class AuthPersistenceAdapter implements AuthPort {
 
-    private final SubscriberDataRepository subscriberDataRepository;
-    private final SubscriberDataMapper subscriberDataMapper;
+    private final SubscriberRepository subscriberRepository;
+    private final SubscriberMapper subscriberMapper;
 
     @Override
-    public SubscriberData loadUserByEmail(String email) {
-        final var subscriberData = subscriberDataRepository.findByEmail(email);
-        if (subscriberData.isPresent()) {
-            return subscriberDataMapper.toSubscriberData(subscriberData.get());
+    public Subscriber loadUserByEmail(String email) {
+        final var subscriber = subscriberRepository.findBySubscriberDataEmail(email);
+        if (subscriber.isPresent()) {
+            return subscriberMapper.toSubscriber(subscriber.get());
         } else {
             throw new SubscriberNotFoundException(email);
         }
