@@ -1,5 +1,6 @@
 package edu.agh.jabeda.server.adapters.out.persistence.adapter;
 
+import com.google.maps.model.LatLng;
 import edu.agh.jabeda.server.adapters.out.persistence.entity.CategoryEntity;
 import edu.agh.jabeda.server.adapters.out.persistence.entity.RoleEntity;
 import edu.agh.jabeda.server.adapters.out.persistence.entity.SubscriberAddressEntity;
@@ -11,6 +12,7 @@ import edu.agh.jabeda.server.adapters.out.persistence.repository.RoleRepository;
 import edu.agh.jabeda.server.adapters.out.persistence.repository.SubscriberDataRepository;
 import edu.agh.jabeda.server.adapters.out.persistence.repository.SubscriberRepository;
 import edu.agh.jabeda.server.application.port.in.model.request.CreateSubscriberRequest;
+import edu.agh.jabeda.server.application.port.in.model.request.UpdateSubscriberRequest;
 import edu.agh.jabeda.server.application.port.out.SubscriberPort;
 import edu.agh.jabeda.server.common.PersistenceAdapter;
 import edu.agh.jabeda.server.domain.Subscriber;
@@ -18,8 +20,11 @@ import edu.agh.jabeda.server.domain.SupportedRole;
 import edu.agh.jabeda.server.domain.exception.CategoryNotFoundException;
 import edu.agh.jabeda.server.domain.exception.RoleNotFoundException;
 import edu.agh.jabeda.server.domain.exception.SubscriberAlreadyExistsException;
+import edu.agh.jabeda.server.domain.exception.SubscriberNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Collection;
@@ -36,6 +41,7 @@ public class SubscriberPersistenceAdapter implements SubscriberPort {
     private final CategoryRepository categoryRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder encoder;
+    private final AuthenticationManager authenticationManager;
 
     @Override
     public Collection<Subscriber> getSubscribers() {
@@ -43,7 +49,7 @@ public class SubscriberPersistenceAdapter implements SubscriberPort {
     }
 
     @Override
-    public SubscriberEntity createSubscriber(CreateSubscriberRequest body) {
+    public SubscriberEntity createSubscriber(CreateSubscriberRequest body, LatLng latLng) {
         if (subscriberDataRepository.existsByEmail(body.getEmail())) {
             throw new SubscriberAlreadyExistsException(body.getEmail());
         }
@@ -59,10 +65,41 @@ public class SubscriberPersistenceAdapter implements SubscriberPort {
         subscriberDataEntity.setIdSubscriber(subscriber.getIdSubscriber());
         subscriber.setSubscriberData(subscriberDataEntity);
         final var subscriberInfoEntity = createSubscriberInfoEntity(body);
-        subscriberInfoEntity.setSubscriber(subscriber);
+        subscriberInfoEntity.setIdSubscriber(subscriber.getIdSubscriber());
         subscriber.setSubscriberInfo(subscriberInfoEntity);
 
         return subscriberRepository.save(subscriber);
+    }
+
+    @Override
+    public SubscriberEntity updateSubscriber(UpdateSubscriberRequest body, LatLng latLng) {
+        final var authentication  = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(body.getEmail(), body.getOldPassword()));
+        if(!authentication.isAuthenticated()){
+            throw new SubscriberNotFoundException(body.getEmail());
+        }
+        final var subscriber = subscriberRepository.findBySubscriberDataEmail(body.getEmail());
+        if(subscriber.isEmpty()) {
+            throw new SubscriberNotFoundException(body.getEmail());
+        }
+        final var subscriberEntity = subscriber.get();
+        final var data =  subscriberEntity.getSubscriberData();
+        final var info =  subscriberEntity.getSubscriberInfo();
+        subscriberEntity.setFirstName(body.getFirstName());
+        subscriberEntity.setLastName(body.getLastName());
+        subscriberEntity.setCategories(getCategoriesByName(body.getCategories()));
+        data.setPassword(encoder.encode(body.getNewPassword()));
+        info.setPhoneNumber(body.getNumber());
+
+        final var address =  info.getSubscriberAddress();
+        address.setCountry(body.getCountry());
+        address.setCity(body.getCity());
+        address.setStreet(body.getStreet());
+        address.setBuildingNumber(body.getBuildingNumber().trim());
+        address.setLatitude(latLng.lat);
+        address.setLongitude(latLng.lng);
+
+        return subscriberRepository.save(subscriberEntity);
+
     }
 
     private SubscriberDataEntity createSubscriberDataEntity(CreateSubscriberRequest body) {
@@ -85,7 +122,7 @@ public class SubscriberPersistenceAdapter implements SubscriberPort {
         subscriberAddressEntity.setCountry(body.getCountry());
         subscriberAddressEntity.setCity(body.getCity());
         subscriberAddressEntity.setStreet(body.getStreet());
-        subscriberAddressEntity.setBuildingNumber(body.getBuildingNumber());
+        subscriberAddressEntity.setBuildingNumber(body.getBuildingNumber().trim());
         subscriberAddressEntity.setLongitude(19.944544);
         subscriberAddressEntity.setLatitude(50.049683);
         return subscriberAddressEntity;

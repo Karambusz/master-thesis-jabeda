@@ -1,11 +1,10 @@
 package edu.agh.jabeda.server.domain;
 
 public enum SupportedProblemStatus {
-    PENDING(1, "Pending", "Pending"),
-    ACCEPTED(2, "Accepted", "Accepted"),
-    REJECTED(3, "Rejected", "Rejected"),
-    DONE(4, "Done", "Done"),
-    REPORTED(5, "Reported", "Reported");
+    PENDING(1, "Zgłoszono", "Pending"),
+    ACCEPTED(2, "W trakcie", "Accepted"),
+    REJECTED(3, "Odrzucono", "Rejected"),
+    DONE(4, "Skończono", "Done");
 
     private final int id;
     private final String code;

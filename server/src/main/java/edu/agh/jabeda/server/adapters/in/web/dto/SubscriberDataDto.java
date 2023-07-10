@@ -1,5 +1,6 @@
 package edu.agh.jabeda.server.adapters.in.web.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,6 +18,7 @@ public class SubscriberDataDto {
 
     private String email;
 
+    @JsonIgnore
     private String password;
 
     private Set<RoleDto> roles = new HashSet<>();

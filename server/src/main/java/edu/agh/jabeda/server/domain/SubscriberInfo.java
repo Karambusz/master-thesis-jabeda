@@ -10,9 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SubscriberInfo {
-    private int idSubscriberInfo;
-
-    private Subscriber subscriber;
+    private int idSubscriber;
 
     private SubscriberAddress subscriberAddress;
 

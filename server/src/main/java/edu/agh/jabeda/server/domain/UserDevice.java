@@ -6,8 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -23,6 +21,4 @@ public class UserDevice {
     private boolean isBanned;
 
     private LocalDateTime banDate;
-
-    private Set<ReportedProblem> reportedProblems = new HashSet<>();
 }
