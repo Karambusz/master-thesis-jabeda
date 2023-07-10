@@ -17,6 +17,7 @@
 		<java.version>17</java.version>
 		<org.mapstruct.version>1.5.3.Final</org.mapstruct.version>
 		<org.lombok.version>1.18.26</org.lombok.version>
+		<org.assertj.version>3.23.1</org.assertj.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -63,6 +64,11 @@
             <version>3.0.2</version>
         </dependency>
 		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
@@ -96,7 +102,18 @@
 			<artifactId>aws-java-sdk</artifactId>
 			<version>1.12.429</version>
 		</dependency>
-    </dependencies>
+		<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
+			<version>${org.assertj.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
 
 	<build>
 		<plugins>
