@@ -10,7 +10,14 @@ import java.util.Collection;
 import java.util.Optional;
 
 public interface ReportedProblemRepository extends JpaRepository<ReportedProblemEntity, Integer> {
-    Collection<ReportedProblemEntity> getReportedProblemEntitiesByProblem_Category(CategoryEntity category);
+    @Query("select p from ReportedProblemEntity p where p.problem.category=:category and p.problemStatus.idProblemStatus=:statusId")
+    Collection<ReportedProblemEntity> getReportedProblemEntitiesByCategoryAndStatus(
+            @Param(value = "category") CategoryEntity category, @Param(value = "statusId") Integer statusId);
+
+    @Query("select p from ReportedProblemEntity p where p.problemSubscriber.subscriber.idSubscriber=:idSubscriber and p.problemStatus.idProblemStatus=:statusId")
+    Collection<ReportedProblemEntity> getReportedProblemEntitiesBySubscriberAndStatus(
+            @Param(value = "idSubscriber") Integer idSubscriber, @Param(value = "statusId") Integer statusId);
+
     Collection<ReportedProblemEntity> getReportedProblemEntityByUserDevice_DeviceId(String deviseId);
 
     @Query("select p from ReportedProblemEntity p where p.problemSubscriber.subscriber.idSubscriber=:idSubscriber")

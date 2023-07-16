@@ -95,8 +95,9 @@ public class ReportedProblemController {
             @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content)
     })
     @GetMapping
-    Collection<ReportedProblemDto> getNewReportedProblemsByCategories(@Valid @RequestParam List<String> category) {
-        return reportProblemUseCase.getNewReportedProblemsByCategories(category);
+    Collection<ReportedProblemDto> getNewReportedProblemsByCategories(@Valid @RequestParam List<String> category,
+                                                                      @Valid @RequestParam Integer subscriberId) {
+        return reportProblemUseCase.getNewReportedProblemsByCategories(category, subscriberId);
     }
 
     @ResponseStatus(HttpStatus.OK)

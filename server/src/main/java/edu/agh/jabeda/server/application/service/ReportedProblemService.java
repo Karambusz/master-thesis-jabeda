@@ -51,15 +51,12 @@ public class ReportedProblemService implements ReportProblemUseCase {
 
     @Override
     public Collection<ReportedProblemDto> getNewReportedProblemsByCategories(
-            List<String> categories) {
+            List<String> categories, Integer subscriberId) {
         if (categories.isEmpty()) {
             return Collections.emptyList();
         }
         final var pendingProblems = reportedProblemPort
-                .getNewReportedProblemsByCategories(categories)
-                .stream()
-                .filter(problem -> problem.getProblemStatus().getIdProblemStatus() == SupportedProblemStatus.PENDING.getId())
-                .toList();
+                .getNewReportedProblemsByCategories(categories, subscriberId);
         return reportedProblemMapper.toReportedProblemDtos(pendingProblems);
     }
 
@@ -72,9 +69,13 @@ public class ReportedProblemService implements ReportProblemUseCase {
 
     @Override
     public Collection<ReportedProblemDto> getSubscriberReportedProblemsHistory(Integer subscriberId) {
-        return reportedProblemMapper.toReportedProblemDtos(
-                reportedProblemPort.getSubscriberReportedProblemsHistory(subscriberId)
-        );
+        final var problems = reportedProblemPort
+                .getSubscriberReportedProblemsHistory(subscriberId)
+                .stream()
+                .filter(problem ->
+                        problem.getProblemStatus().getIdProblemStatus() != SupportedProblemStatus.ACCEPTED.getId())
+                .toList();
+        return reportedProblemMapper.toReportedProblemDtos(problems);
     }
 
     @Override

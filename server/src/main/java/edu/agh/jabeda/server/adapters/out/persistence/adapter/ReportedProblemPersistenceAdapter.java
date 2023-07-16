@@ -22,6 +22,7 @@ import edu.agh.jabeda.server.domain.ProblemStatus;
 import edu.agh.jabeda.server.domain.ReportedProblem;
 import edu.agh.jabeda.server.domain.ReportedProblemAddress;
 import edu.agh.jabeda.server.domain.ReportedProblemId;
+import edu.agh.jabeda.server.domain.SupportedProblemStatus;
 import edu.agh.jabeda.server.domain.exception.CategoryNotFoundException;
 import edu.agh.jabeda.server.domain.exception.ProblemNotFoundException;
 import edu.agh.jabeda.server.domain.exception.ReportedProblemNotFoundException;
@@ -89,18 +90,28 @@ public class ReportedProblemPersistenceAdapter implements ReportedProblemPort {
     }
 
     @Override
-    public Collection<ReportedProblem> getNewReportedProblemsByCategories(List<String> categories) {
+    public Collection<ReportedProblem> getNewReportedProblemsByCategories(List<String> categories, Integer subscriberId) {
         final var reportedProblems = new ArrayList<ReportedProblem>();
         categories.forEach(category -> {
             final var categoryEntity = categoryRepository.findFirstByCategoryName(category);
             if(categoryEntity.isPresent()) {
-                final var problemsEntity  =  reportedProblemRepository
-                        .getReportedProblemEntitiesByProblem_Category(categoryEntity.get());
-                reportedProblems.addAll(reportedProblemMapper.toReportedProblems(problemsEntity));
+                final var pendingProblemsEntity  =  reportedProblemRepository
+                        .getReportedProblemEntitiesByCategoryAndStatus(
+                                categoryEntity.get(),
+                                SupportedProblemStatus.PENDING.getId()
+                        );
+
+                reportedProblems.addAll(reportedProblemMapper.toReportedProblems(pendingProblemsEntity));
             } else {
                 throw  new CategoryNotFoundException(String.valueOf(category));
             }
         });
+
+        final var acceptedProblemsEntity = reportedProblemRepository
+                .getReportedProblemEntitiesBySubscriberAndStatus(subscriberId,
+                        SupportedProblemStatus.ACCEPTED.getId());
+
+        reportedProblems.addAll(reportedProblemMapper.toReportedProblems(acceptedProblemsEntity));
         return reportedProblems;
     }
 
