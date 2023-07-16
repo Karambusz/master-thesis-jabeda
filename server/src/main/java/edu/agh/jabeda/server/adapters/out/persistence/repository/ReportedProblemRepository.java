@@ -14,14 +14,17 @@ public interface ReportedProblemRepository extends JpaRepository<ReportedProblem
     Collection<ReportedProblemEntity> getReportedProblemEntitiesByCategoryAndStatus(
             @Param(value = "category") CategoryEntity category, @Param(value = "statusId") Integer statusId);
 
-    @Query("select p from ReportedProblemEntity p where p.problemSubscriber.subscriber.idSubscriber=:idSubscriber and p.problemStatus.idProblemStatus=:statusId")
+    @Query("select p from ReportedProblemEntity p join ReportedProblemSubscriberEntity ps on p.idReportedProblem = ps.reportedProblem.idReportedProblem where ps.subscriber.idSubscriber=:idSubscriber and p.problemStatus.idProblemStatus=:statusId")
     Collection<ReportedProblemEntity> getReportedProblemEntitiesBySubscriberAndStatus(
             @Param(value = "idSubscriber") Integer idSubscriber, @Param(value = "statusId") Integer statusId);
 
+    @Query("select count(p) from ReportedProblemEntity p join UserDeviceEntity d on p.userDevice.idUserDevice = d.idUserDevice where  d.deviceId=:deviceId and p.problemStatus.idProblemStatus=3")
+    Integer countRejectedProblemsByDeviceId(@Param(value = "deviceId") String deviceId);
+
     Collection<ReportedProblemEntity> getReportedProblemEntityByUserDevice_DeviceId(String deviseId);
 
-    @Query("select p from ReportedProblemEntity p where p.problemSubscriber.subscriber.idSubscriber=:idSubscriber")
-    Collection<ReportedProblemEntity> getReportedProblemEntityBySubscriber(
+    @Query("select p from ReportedProblemEntity p join ReportedProblemSubscriberEntity ps on p.idReportedProblem = ps.reportedProblem.idReportedProblem where ps.subscriber.idSubscriber=:idSubscriber")
+    Collection<ReportedProblemEntity> getReportedProblemEntityBySubscriberId(
             @Param(value = "idSubscriber") Integer idSubscriber
     );
     Optional<ReportedProblemEntity> getReportedProblemEntityByIdReportedProblem(Integer id);

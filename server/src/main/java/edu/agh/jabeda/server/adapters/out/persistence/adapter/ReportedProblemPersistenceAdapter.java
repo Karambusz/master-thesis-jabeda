@@ -115,6 +115,10 @@ public class ReportedProblemPersistenceAdapter implements ReportedProblemPort {
         return reportedProblems;
     }
 
+    public Integer getRejectedProblemsCount(String userDeviceId) {
+        return reportedProblemRepository.countRejectedProblemsByDeviceId(userDeviceId);
+    }
+
     @Override
     public Collection<ReportedProblem> getUserReportedProblemsHistory(String userDeviceId) {
         return reportedProblemMapper.toReportedProblems(
@@ -125,7 +129,7 @@ public class ReportedProblemPersistenceAdapter implements ReportedProblemPort {
     @Override
     public Collection<ReportedProblem> getSubscriberReportedProblemsHistory(Integer subscriberId) {
         return reportedProblemMapper.toReportedProblems(
-                reportedProblemRepository.getReportedProblemEntityBySubscriber(subscriberId)
+                reportedProblemRepository.getReportedProblemEntityBySubscriberId(subscriberId)
         );
     }
 

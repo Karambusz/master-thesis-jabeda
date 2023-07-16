@@ -57,7 +57,14 @@ public class ReportedProblemService implements ReportProblemUseCase {
         }
         final var pendingProblems = reportedProblemPort
                 .getNewReportedProblemsByCategories(categories, subscriberId);
-        return reportedProblemMapper.toReportedProblemDtos(pendingProblems);
+        final var problems = pendingProblems.stream().peek(
+                problem -> {
+                    final var rejectedCount = reportedProblemPort
+                            .getRejectedProblemsCount(problem.getUserDevice().getDeviceId());
+                    problem.setRejectedProblemsCount(rejectedCount);
+                }
+        ).toList();
+        return reportedProblemMapper.toReportedProblemDtos(problems);
     }
 
     @Override

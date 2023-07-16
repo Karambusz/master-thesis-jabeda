@@ -25,4 +25,6 @@ public interface ReportedProblemPort {
     ReportedProblem updateReportedProblemStatus(Integer reportedProblemId, Integer problemStatusId, Integer subscriberId);
 
     void banUserByDeviceId(String userDeviceId);
+
+    Integer getRejectedProblemsCount(String userDeviceId);
 }

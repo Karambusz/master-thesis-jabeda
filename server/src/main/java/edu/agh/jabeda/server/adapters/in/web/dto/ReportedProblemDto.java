@@ -27,4 +27,6 @@ public class ReportedProblemDto {
     private String problemStatusCode;
 
     private String userDeviceId;
+
+    private Integer rejectedProblemsCount;
 }

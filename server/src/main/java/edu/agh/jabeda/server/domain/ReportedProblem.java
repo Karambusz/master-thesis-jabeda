@@ -31,4 +31,6 @@ public class ReportedProblem {
     private ReportedProblemSubscriber problemSubscriber;
 
     private UserDevice userDevice;
+
+    private Integer rejectedProblemsCount;
 }

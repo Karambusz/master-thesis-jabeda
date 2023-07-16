@@ -21,6 +21,7 @@ import java.util.Collection;
         SubscriberDataMapper.class})
 public interface ReportedProblemMapper {
     @Mapping(ignore = true, target = "problemSubscriber")
+    @Mapping(ignore = true, target = "rejectedProblemsCount")
     ReportedProblem toReportedProblem(ReportedProblemEntity reportedProblemEntity);
     Collection<ReportedProblem> toReportedProblems(Collection<ReportedProblemEntity> reportedProblemEntities);
     ReportedProblemAddress toReportedProblemAddress(ReportedProblemAddressEntity reportedProblemAddressEntity);
