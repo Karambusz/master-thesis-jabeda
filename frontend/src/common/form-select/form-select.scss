@@ -1,0 +1,40 @@
+.select-wrapper {
+    position: relative;
+    margin: 5px 0 0 0;
+    grid-column-start: 1;
+    grid-column-end: 3;
+
+    .react-select__control {
+        background: none;
+        background-color: #f0f4fa;
+        color: grey;
+        font-size: 18px;
+        display: block;
+        width: 95%;
+        min-height: 45px;
+        border: none;
+        border-radius: 0;
+        border-bottom: 2px solid #2182BD;
+        margin: 25px 0;
+        &.error {
+            border-bottom: 2px solid rgb(224, 31, 31);
+        }
+    }
+
+    .react-select__value-container {
+        padding: 1px 2px;
+    }
+
+    .react-select__placeholder {
+        color: grey;
+        font-size: 14px;
+        &.error {
+            color: rgb(224, 31, 31);
+        }
+
+    }
+
+    .react-select__indicators { 
+        display: none; 
+    }
+}
