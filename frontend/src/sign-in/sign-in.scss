@@ -1,0 +1,29 @@
+.sign-in-wrapper {
+    display: block;
+    width: 700px;
+    height: auto;
+    margin: 10px auto 0;
+    border: solid 2px #5282BD;
+    padding-top: 20px;
+
+    .sign-in-header {
+        font-family: "Roboto Condensed", sans-serif;
+        color: #222b3b;
+        font-weight: 600;
+        margin-left: 50px;
+        text-transform: uppercase;
+    }
+
+    form {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+    .btn.submit {
+        background-color: #2182BD;
+        color: #f7f8fa;
+    }
+
+    #login-subscriber-form {
+        margin: 0 0 30px 50px;
+    }
+}

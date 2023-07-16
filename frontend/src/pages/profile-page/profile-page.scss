@@ -1,0 +1,54 @@
+.profile-page {
+    max-width: 800px;
+    display: block;
+    margin: 10px auto 0;
+    border: solid 2px #5282BD;
+    padding-top: 20px;
+
+    .profile-title {
+        font-family: "Roboto Condensed", sans-serif;
+        color: #222b3b;
+        font-weight: 600;
+        margin-left: 50px;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    .user-information {
+        margin-top: 20px;
+        padding: 20px;
+        color: #222b3b;
+
+        .user-info-columns{
+            display: flex;
+            justify-content: space-around;
+
+            .information-item {
+                font-size: 20px;
+                margin-top: 20px;
+
+                :first-child {
+                    font-size: 20px;
+                }
+            }
+        }
+
+        .profile-page-btn {
+            display: flex;
+            justify-content: center;
+        }
+
+    }
+
+    a {
+        width: 20%;
+        float: right;
+    }
+
+    .edit {
+        margin-top: 20px;
+        background-color: #2182BD;
+        width: max-content;
+        padding: 0 20px;
+    }
+}
