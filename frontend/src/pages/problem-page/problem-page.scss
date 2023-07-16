@@ -1,0 +1,21 @@
+.problem-page {
+
+    .problem-title {
+        text-align: center;
+        margin-top: 20px;
+        margin-bottom: 30px;
+        font-family: "Roboto Condensed", sans-serif;
+        color: #222b3b;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+
+    fieldset {
+        margin: 15px 0;
+        legend {
+            display: block;
+            font-size: 28px;
+        }
+    }
+    
+}
