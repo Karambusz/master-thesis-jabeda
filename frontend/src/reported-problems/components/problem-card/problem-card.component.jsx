@@ -29,6 +29,11 @@ const ProblemCardComponent = ({ data, open, problemStatuses, onClose, updateStat
         onClose();
     }
 
+    const banUserDevice = () => {
+        data && banUser(data.userDeviceId)
+        onClose();
+    }
+
     useEffect(() => {
         const statusOptions = problemStatuses.map(({statusName, statusCode}) =>  {return {value: statusCode, label: statusName};})
         setStatusOptions(statusOptions);
@@ -95,7 +100,7 @@ const ProblemCardComponent = ({ data, open, problemStatuses, onClose, updateStat
                     </CardContent>
                     <CardActions style={{justifyContent: 'center'}}>
                         {!isHistory && <CustomButton  additionalClass="card" size="small" onClick={updateProblemStatus}>Zapisz</CustomButton>}
-                        {!isHistory && <CustomButton  additionalClass="card" size="small" onClick={() => banUser(data.userDeviceId)}>Ban</CustomButton>}
+                        {!isHistory && <CustomButton  additionalClass="card" size="small" onClick={banUserDevice}>Ban</CustomButton>}
                         <CustomButton additionalClass="card" size="small" onClick={onClose}>Zamknij</CustomButton>
                     </CardActions>
 

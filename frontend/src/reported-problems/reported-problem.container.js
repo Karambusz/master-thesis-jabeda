@@ -41,7 +41,6 @@ export const ReportedProblemContainer = (props) => {
 
     const banUserByDeviceId = (deviceId) => {
       banUser && banUser(token, deviceId);
-      console.log('here');
     }
 
     return(

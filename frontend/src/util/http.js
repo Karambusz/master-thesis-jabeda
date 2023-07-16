@@ -55,3 +55,19 @@ export const fetchWithAuthorization = async (url,  method, token,  data = false)
 
     return {data: resData, status: res.status};
 };
+
+export const fetchWithoutData = async (url,  method, token,  data = false) => {
+
+    const options = {
+        method,
+        headers: {
+            'Content-type': 'application/json',
+            'Authorization': 'Bearer ' + token
+        }
+    };
+
+    if (data && method !== 'GET') {
+        options.body = JSON.stringify(data);
+    }
+    return await fetch(url, options);
+};

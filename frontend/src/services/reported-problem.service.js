@@ -1,5 +1,5 @@
 import UrlUtil from '../util/url-util';
-import {fetchWithAuthorization, getResource} from '../util/http';
+import {fetchWithAuthorization, fetchWithoutData, getResource} from '../util/http';
 
 const serviceHost = process.env.REACT_APP_API_ROOT_URL;
 export function svcUpdateReportedProblemStatus(token, reportedProblemId, problemStatusId, subscriberId) {
@@ -24,7 +24,7 @@ export function svcBanUser(token, userDeviceId) {
     });
 
     const serviceUrl = serviceHost + formattedUrl;
-    return fetchWithAuthorization(serviceUrl, 'PATCH', token);
+    return fetchWithoutData(serviceUrl, 'PATCH', token);
 }
 
 export function svcGetSubscriberReportedProblemsHistory(token, subscriberId) {
