@@ -75,9 +75,7 @@ public class ReportedProblemController {
     @Operation(summary = "Ban user by device id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
-                    description = "Successfully banned user by device id",
-                    content = { @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = ReportedProblemDto.class)) }),
+                    description = "Successfully banned user by device id"),
             @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
             @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content)
     })
