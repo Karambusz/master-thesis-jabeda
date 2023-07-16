@@ -1,0 +1,42 @@
+.sign-up-wrapper {
+    display: block;
+    width: 800px;
+    border: solid 2px #5282BD;
+    margin: 10px auto 0;
+    padding-top: 20px;
+
+    .sign-up-header {
+        font-family: "Roboto Condensed", sans-serif;
+        color: #222b3b;
+        font-weight: 600;
+        margin-left: 50px;
+        text-transform: uppercase;
+    }
+
+    form {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+    .btn.submit {
+        background-color: #2182BD;
+        color: #f7f8fa;
+    }
+
+    .spinner-wrapper {
+        grid-column-start: 1;
+        grid-column-end: 3;
+    }
+
+    #registration-input-street {
+        grid-column-start: 1;
+        grid-column-end: 3; 
+     }
+ 
+     #registration-input-street > input {
+         width: 95%;
+    }
+
+    #create-subscriber-form {
+        margin: 0 15px 30px 50px;
+    }
+}
