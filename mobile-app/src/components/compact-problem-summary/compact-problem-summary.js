@@ -13,7 +13,7 @@ import { STATUSES_MAP } from "../../constants/constants";
 
 
 const isAndroid = Platform.OS === "android";
-export const CompactProblemSummary = ({ photo, photoHistory, problem, problemCategory, location, status, date }) => {
+export const CompactProblemSummary = ({ photo, photoHistory, problem, problemCategory, location, status, date, isHistory }) => {
     const Image = isAndroid ? CompactWebview : CompactImage;
     const photoUri = photo && photo["uri"] ? photo["uri"] : photoHistory;
     const [isImageLoading, setIsImageLoading] = useState(true);
@@ -74,13 +74,17 @@ export const CompactProblemSummary = ({ photo, photoHistory, problem, problemCat
                         {STATUSES_MAP[status]} {status}
                     </Text>
                     <Spacer position="top" size="medium" />
-                    <Text variant="headerLabel">
-                        Data zgłoszenia
-                    </Text>
-                    <Spacer position="top" size="small" />
-                    <Text>
-                        {date ? date.split("T")[0] : null}
-                    </Text>
+                    {isHistory && (
+                            <>
+                                <Text variant="headerLabel">
+                                    Data zgłoszenia
+                                </Text>
+                                <Spacer position="top" size="small" />
+                                <Text>
+                                    {date ? date.split("T")[0] : null}
+                                </Text>
+                            </>
+                    )}
             </ProblemInformationWrapper>
         </CompactProblemSummaryWrapper>
     )

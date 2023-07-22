@@ -51,7 +51,7 @@ export const MainMenuScreen = ({ navigation }) => {
                         style={[reportedProblemHistory.length > 0 ? styles.historyExist : styles.historyNotExist]}
                         labelStyle={{textAlign: "left"}}
                         onPress={() => {
-                            if (!reportedProblemHistory) {
+                            if (reportedProblemHistory && reportedProblemHistory.length === 0) {
                                 Toast.show({
                                     type: 'info',
                                     text1: HISTORY_TOAST_TEXT1_MESSAGE,

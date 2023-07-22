@@ -29,7 +29,8 @@ export const GO_HOME_BUTTON_LABEL = "Powrót do strony głównej";
 
 export const CATEGORY_PREDICTION_HELPER_TEXT = "Sprawdź czy kategoria została prawidłowo zidentyfikowana (jeżeli nie, ustaw poprawną kategorię)!";
 export const CATEGORY_TRANSLATED_VALUES = {
-    "Garbage and segregation": "Śmiecie i segregacja"
+    "Garbage and segregation": "Śmiecie i segregacja",
+    "Destruction": "Zniszczenia"
 }
 
 export const STATUSES_MAP = {
