@@ -84,6 +84,7 @@ export const ReportProblemSummaryScreen = ({ navigation }) => {
                             problemCategory={problemCategory}
                             problem={problem}
                             location={location.fullAddress}
+                            isHistory={false}
                         />
                         <Footer>
                             <Spacer position="top" size="medium" />

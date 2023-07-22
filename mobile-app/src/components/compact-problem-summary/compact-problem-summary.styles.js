@@ -14,7 +14,7 @@ export const ProblemImageWrapper = styled.View`
 `;
 
 export const ProblemInformationWrapper = styled.View`
-  height: 260px;
+  height: 300px;
   width: 45%;
 `;
 

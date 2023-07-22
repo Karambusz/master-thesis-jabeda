@@ -15,11 +15,12 @@ export const HistoryScreen = ({ route }) => {
                     <>
                         <CompactProblemSummary
                             photoHistory={item.imageUrl}
-                            problemCategory={"Mock history category"}
+                            problemCategory={item.problem.category}
                             problem={item.problem.problemName}
-                            location={"Mock history location"}
-                            status={item.problemStatus.statusName}
+                            location={item.reportedProblemAddress.address}
+                            status={item.problemStatusCode}
                             date={item.reportedDateTime}
+                            isHistory={true}
                         />
                         <Spacer position="top" size="medium" />
                         <Spacer position="top" size="medium" />
