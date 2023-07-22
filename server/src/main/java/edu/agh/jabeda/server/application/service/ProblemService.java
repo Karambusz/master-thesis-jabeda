@@ -1,7 +1,7 @@
 package edu.agh.jabeda.server.application.service;
 
 import edu.agh.jabeda.server.adapters.in.web.dto.ProblemStatusDto;
-import edu.agh.jabeda.server.application.port.in.model.usecase.ProblemUseCase;
+import edu.agh.jabeda.server.application.port.in.usecase.ProblemUseCase;
 import edu.agh.jabeda.server.application.port.out.ProblemPort;
 import edu.agh.jabeda.server.application.service.mapper.CategoryMapper;
 import edu.agh.jabeda.server.application.service.mapper.ProblemStatusMapper;

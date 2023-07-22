@@ -2,7 +2,7 @@ package edu.agh.jabeda.server.adapters.in.web.controller;
 
 import edu.agh.jabeda.server.application.port.in.model.request.CreateSubscriberRequest;
 import edu.agh.jabeda.server.application.port.in.model.request.UpdateSubscriberRequest;
-import edu.agh.jabeda.server.application.port.in.model.usecase.SubscriberUseCase;
+import edu.agh.jabeda.server.application.port.in.usecase.SubscriberUseCase;
 import edu.agh.jabeda.server.domain.Subscriber;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;

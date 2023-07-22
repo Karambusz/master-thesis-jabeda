@@ -1,6 +1,6 @@
 package edu.agh.jabeda.server.application.service;
 
-import edu.agh.jabeda.server.application.port.in.model.usecase.AuthUseCase;
+import edu.agh.jabeda.server.application.port.in.usecase.AuthUseCase;
 import edu.agh.jabeda.server.application.port.out.AuthPort;
 import edu.agh.jabeda.server.common.UseCase;
 import edu.agh.jabeda.server.domain.Subscriber;

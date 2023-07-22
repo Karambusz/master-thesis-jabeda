@@ -3,7 +3,7 @@ package edu.agh.jabeda.server.adapters.in.web.controller;
 import edu.agh.jabeda.server.adapters.in.web.dto.CategoryProblemsDto;
 import edu.agh.jabeda.server.adapters.in.web.dto.ProblemStatusDto;
 import edu.agh.jabeda.server.adapters.in.web.dto.mapper.CategoryProblemsDtoMapper;
-import edu.agh.jabeda.server.application.port.in.model.usecase.ProblemUseCase;
+import edu.agh.jabeda.server.application.port.in.usecase.ProblemUseCase;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;

@@ -3,7 +3,7 @@ package edu.agh.jabeda.server.application.service;
 import com.google.maps.model.LatLng;
 import edu.agh.jabeda.server.adapters.in.web.dto.ReportedProblemDto;
 import edu.agh.jabeda.server.application.port.in.model.request.ReportProblemRequest;
-import edu.agh.jabeda.server.application.port.in.model.usecase.ReportProblemUseCase;
+import edu.agh.jabeda.server.application.port.in.usecase.ReportProblemUseCase;
 import edu.agh.jabeda.server.application.port.out.ImageStoragePort;
 import edu.agh.jabeda.server.application.port.out.ReportedProblemPort;
 import edu.agh.jabeda.server.application.service.mapper.ReportedProblemMapper;

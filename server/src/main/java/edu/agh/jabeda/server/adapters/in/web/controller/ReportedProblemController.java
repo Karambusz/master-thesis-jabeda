@@ -2,7 +2,7 @@ package edu.agh.jabeda.server.adapters.in.web.controller;
 
 import edu.agh.jabeda.server.adapters.in.web.dto.ReportedProblemDto;
 import edu.agh.jabeda.server.application.port.in.model.request.ReportProblemRequest;
-import edu.agh.jabeda.server.application.port.in.model.usecase.ReportProblemUseCase;
+import edu.agh.jabeda.server.application.port.in.usecase.ReportProblemUseCase;
 import edu.agh.jabeda.server.domain.ReportedProblemId;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
