@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +40,8 @@ public class ReportedProblemController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @Operation(summary = "Create reported problem")
+    @Operation(summary = "Create reported problem",
+            security = @SecurityRequirement(name = "Bearer Authentication"))
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Successfully returns an id of created reported problem",
                     content = { @Content(mediaType = "application/json",
@@ -54,7 +56,8 @@ public class ReportedProblemController {
 
     @PatchMapping(path = "/{reportedProblemId}/status")
     @ResponseStatus(HttpStatus.OK)
-    @Operation(summary = "Update reported problem status")
+    @Operation(summary = "Update reported problem status",
+            security = @SecurityRequirement(name = "Bearer Authentication"))
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
                     description = "Successfully update reported problem status and assign subscriber to problem",
@@ -72,7 +75,8 @@ public class ReportedProblemController {
 
     @PatchMapping(path = "/users/{userDeviceId}/ban")
     @ResponseStatus(HttpStatus.OK)
-    @Operation(summary = "Ban user by device id")
+    @Operation(summary = "Ban user by device id",
+            security = @SecurityRequirement(name = "Bearer Authentication"))
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
                     description = "Successfully banned user by device id"),
@@ -84,7 +88,8 @@ public class ReportedProblemController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @Operation(summary = "Get all pending reported problems")
+    @Operation(summary = "Get all pending reported problems",
+            security = @SecurityRequirement(name = "Bearer Authentication"))
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully returns  all pending reported problems",
                     content = { @Content(mediaType = "application/json",
@@ -99,7 +104,8 @@ public class ReportedProblemController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @Operation(summary = "Get user reported problems history")
+    @Operation(summary = "Get user reported problems history",
+            security = @SecurityRequirement(name = "Bearer Authentication"))
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully returns all user reported problems",
                     content = { @Content(mediaType = "application/json",
@@ -113,7 +119,8 @@ public class ReportedProblemController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @Operation(summary = "Get subscriber reported problems history")
+    @Operation(summary = "Get subscriber reported problems history",
+            security = @SecurityRequirement(name = "Bearer Authentication"))
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully returns all processed by subscriber reported problems",
                     content = { @Content(mediaType = "application/json",
