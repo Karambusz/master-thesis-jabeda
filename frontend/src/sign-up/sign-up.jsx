@@ -175,6 +175,11 @@ const SignUp = () => {
                     clearForm();
                     document.getElementById("create-subscriber-form").reset();
                     setModalAndLoading(true, false, false, setIsModal, setModalError, setLoading);
+                } else if ( status === 409 ) {
+                    const messages = [];
+                    messages.push("Użytkownik z takim e-mailem już istnieje.");
+                    setModalContent(createModalContent("Błąd", messages));
+                    setModalAndLoading(true, true, false, setIsModal, setModalError, setLoading);
                 } else if (status === 400 || status === 404) {
                     const messages = []; 
                     for (const key in res) {
