@@ -16,10 +16,8 @@ import edu.agh.jabeda.server.adapters.out.persistence.repository.SubscriberRepos
 import edu.agh.jabeda.server.adapters.out.persistence.repository.UserDeviceRepository;
 import edu.agh.jabeda.server.application.port.in.model.request.ReportProblemRequest;
 import edu.agh.jabeda.server.application.port.out.ReportedProblemPort;
-import edu.agh.jabeda.server.application.service.mapper.ReportedProblemMapper;
 import edu.agh.jabeda.server.common.PersistenceAdapter;
 import edu.agh.jabeda.server.domain.ProblemStatus;
-import edu.agh.jabeda.server.domain.ReportedProblem;
 import edu.agh.jabeda.server.domain.ReportedProblemAddress;
 import edu.agh.jabeda.server.domain.ReportedProblemId;
 import edu.agh.jabeda.server.domain.SupportedProblemStatus;
@@ -49,7 +47,6 @@ public class ReportedProblemPersistenceAdapter implements ReportedProblemPort {
     private final SubscriberRepository subscriberRepository;
     private final ReportedProblemSubscriberRepository problemSubscriberRepository;
     private final ReportedProblemAddressRepository reportedProblemAddressRepository;
-    private final ReportedProblemMapper reportedProblemMapper;
 
     @Override
     public ReportedProblemId reportProblem(ReportProblemRequest reportProblemRequest,
@@ -90,8 +87,8 @@ public class ReportedProblemPersistenceAdapter implements ReportedProblemPort {
     }
 
     @Override
-    public Collection<ReportedProblem> getNewReportedProblemsByCategories(List<String> categories, Integer subscriberId) {
-        final var reportedProblems = new ArrayList<ReportedProblem>();
+    public Collection<ReportedProblemEntity> getNewReportedProblemsByCategories(List<String> categories, Integer subscriberId) {
+        final var reportedProblems = new ArrayList<ReportedProblemEntity>();
         categories.forEach(category -> {
             final var categoryEntity = categoryRepository.findFirstByCategoryName(category);
             if(categoryEntity.isPresent()) {
@@ -101,7 +98,7 @@ public class ReportedProblemPersistenceAdapter implements ReportedProblemPort {
                                 SupportedProblemStatus.PENDING.getId()
                         );
 
-                reportedProblems.addAll(reportedProblemMapper.toReportedProblems(pendingProblemsEntity));
+                reportedProblems.addAll(pendingProblemsEntity);
             } else {
                 throw  new CategoryNotFoundException(String.valueOf(category));
             }
@@ -111,7 +108,7 @@ public class ReportedProblemPersistenceAdapter implements ReportedProblemPort {
                 .getReportedProblemEntitiesBySubscriberAndStatus(subscriberId,
                         SupportedProblemStatus.ACCEPTED.getId());
 
-        reportedProblems.addAll(reportedProblemMapper.toReportedProblems(acceptedProblemsEntity));
+        reportedProblems.addAll(acceptedProblemsEntity);
         return reportedProblems;
     }
 
@@ -120,21 +117,17 @@ public class ReportedProblemPersistenceAdapter implements ReportedProblemPort {
     }
 
     @Override
-    public Collection<ReportedProblem> getUserReportedProblemsHistory(String userDeviceId) {
-        return reportedProblemMapper.toReportedProblems(
-                reportedProblemRepository.getReportedProblemEntityByUserDevice_DeviceId(userDeviceId)
-        );
+    public Collection<ReportedProblemEntity> getUserReportedProblemsHistory(String userDeviceId) {
+        return reportedProblemRepository.getReportedProblemEntityByUserDevice_DeviceId(userDeviceId);
     }
 
     @Override
-    public Collection<ReportedProblem> getSubscriberReportedProblemsHistory(Integer subscriberId) {
-        return reportedProblemMapper.toReportedProblems(
-                reportedProblemRepository.getReportedProblemEntityBySubscriberId(subscriberId)
-        );
+    public Collection<ReportedProblemEntity> getSubscriberReportedProblemsHistory(Integer subscriberId) {
+        return reportedProblemRepository.getReportedProblemEntityBySubscriberId(subscriberId);
     }
 
     @Override
-    public ReportedProblem updateReportedProblemStatus(Integer reportedProblemId,
+    public ReportedProblemEntity updateReportedProblemStatus(Integer reportedProblemId,
            Integer problemStatusId, Integer subscriberId) {
         final var reportedProblemEntity = getReportedProblemEntityById(reportedProblemId);
         final var subscriberEntity = getSubscriberEntityById(subscriberId);
@@ -142,9 +135,7 @@ public class ReportedProblemPersistenceAdapter implements ReportedProblemPort {
         reportedProblemEntity.setProblemSubscriber(
                 createReportedProblemSubscriberEntity(reportedProblemEntity, subscriberEntity)
         );
-        return reportedProblemMapper.toReportedProblem(
-                reportedProblemRepository.save(reportedProblemEntity)
-        );
+        return reportedProblemRepository.save(reportedProblemEntity);
     }
 
     @Override

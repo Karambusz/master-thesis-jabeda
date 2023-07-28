@@ -3,6 +3,7 @@ package edu.agh.jabeda.server.adapters.in.web.controller;
 import edu.agh.jabeda.server.adapters.in.web.dto.ReportedProblemDto;
 import edu.agh.jabeda.server.application.port.in.model.request.ReportProblemRequest;
 import edu.agh.jabeda.server.application.port.in.usecase.ReportProblemUseCase;
+import edu.agh.jabeda.server.application.service.mapper.ReportedProblemMapper;
 import edu.agh.jabeda.server.domain.ReportedProblemId;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -38,6 +39,8 @@ public class ReportedProblemController {
 
     private final ReportProblemUseCase reportProblemUseCase;
 
+    private final ReportedProblemMapper reportedProblemMapper;
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Create reported problem",
@@ -70,7 +73,9 @@ public class ReportedProblemController {
              @RequestParam Integer problemStatusId,
              @RequestParam Integer subscriberId
     ) {
-        return reportProblemUseCase.updateReportedProblemStatus(reportedProblemId, problemStatusId, subscriberId);
+        return reportedProblemMapper.toReportedProblemDto(
+                reportProblemUseCase.updateReportedProblemStatus(reportedProblemId, problemStatusId, subscriberId)
+        );
     }
 
     @PatchMapping(path = "/users/{userDeviceId}/ban")
@@ -100,7 +105,9 @@ public class ReportedProblemController {
     @GetMapping
     Collection<ReportedProblemDto> getNewReportedProblemsByCategories(@Valid @RequestParam List<String> category,
                                                                       @Valid @RequestParam Integer subscriberId) {
-        return reportProblemUseCase.getNewReportedProblemsByCategories(category, subscriberId);
+        return reportedProblemMapper.toReportedProblemDtos(
+                reportProblemUseCase.getNewReportedProblemsByCategories(category, subscriberId)
+        );
     }
 
     @ResponseStatus(HttpStatus.OK)
@@ -115,7 +122,9 @@ public class ReportedProblemController {
     })
     @GetMapping(path="/user-history")
     Collection<ReportedProblemDto> getUserReportedProblemsHistory(@Valid @RequestParam String userDeviceId) {
-        return reportProblemUseCase.getUserReportedProblemsHistory(userDeviceId);
+        return reportedProblemMapper.toReportedProblemDtos(
+                reportProblemUseCase.getUserReportedProblemsHistory(userDeviceId)
+        );
     }
 
     @ResponseStatus(HttpStatus.OK)
@@ -130,7 +139,9 @@ public class ReportedProblemController {
     })
     @GetMapping(path="/subscriber-history")
     Collection<ReportedProblemDto> getSubscriberReportedProblemsHistory(@Valid @RequestParam Integer subscriberId) {
-        return reportProblemUseCase.getSubscriberReportedProblemsHistory(subscriberId);
+        return reportedProblemMapper.toReportedProblemDtos(
+                reportProblemUseCase.getSubscriberReportedProblemsHistory(subscriberId)
+        );
 
     }
 }

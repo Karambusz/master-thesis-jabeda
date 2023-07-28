@@ -1,20 +1,22 @@
 package edu.agh.jabeda.server.application.port.in.model.request;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 public class ReportProblemRequest {
-    private final int category;
-    private final int problem;
-    private final String description;
-    private final LocalDateTime date;
-    private final String address;
-    private final String deviceId;
-    private final String imageBase64;
+    private int category;
+    private int problem;
+    private String description;
+    private LocalDateTime date;
+    private  String address;
+    private String deviceId;
+    private String imageBase64;
 }

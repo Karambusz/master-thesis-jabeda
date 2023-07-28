@@ -43,7 +43,7 @@ public class CategoryEntity {
     @JsonIgnore
     private Set<SubscriberEntity> subscribers = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "idcategory")
     @JsonIgnore
     private Set<ProblemEntity> problems = new HashSet<>();
