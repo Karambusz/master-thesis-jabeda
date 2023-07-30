@@ -28,4 +28,7 @@ public interface ReportedProblemRepository extends JpaRepository<ReportedProblem
             @Param(value = "idSubscriber") Integer idSubscriber
     );
     Optional<ReportedProblemEntity> getReportedProblemEntityByIdReportedProblem(Integer id);
+
+    @Query("select p.imageUrl from ReportedProblemEntity p where p.problem.category.idCategory=:categoryId")
+    Collection<String> getImageUrlsByProblemCategory(@Param(value = "categoryId") Integer categoryId);
 }

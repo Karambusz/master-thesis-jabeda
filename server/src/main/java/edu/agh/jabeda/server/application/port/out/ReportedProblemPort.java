@@ -27,4 +27,6 @@ public interface ReportedProblemPort {
     void banUserByDeviceId(String userDeviceId);
 
     Integer getRejectedProblemsCount(String userDeviceId);
+
+    Collection<String> getImagesByCategory(Integer categoryId);
 }

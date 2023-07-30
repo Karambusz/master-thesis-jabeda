@@ -15,4 +15,5 @@ public interface ReportProblemUseCase {
     Collection<ReportedProblem> getSubscriberReportedProblemsHistory(Integer subscriberId);
     ReportedProblem updateReportedProblemStatus(Integer reportedProblemId, Integer problemStatusId, Integer subscriberId);
     void banUserByDeviceId(String userDeviceId);
+    Collection<String> getImagesByCategory(Integer categoryId);
 }

@@ -144,4 +144,18 @@ public class ReportedProblemController {
         );
 
     }
+
+    @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Get images by category for machine learning support")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully returns all images by category for machine learning support",
+                    content = { @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = String.class)))}),
+            @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+            @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content)
+    })
+    @GetMapping(path="/images")
+    Collection<String> getImagesByCategory(@Valid @RequestParam Integer categoryId) {
+        return reportProblemUseCase.getImagesByCategory(categoryId);
+    }
 }

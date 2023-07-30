@@ -293,6 +293,23 @@ class ReportedProblemPersistenceAdapterTest {
         assertThrows(ReportedProblemNotFoundException.class, () -> adapter.updateProblemWithImageUrl(imageUrl, new ReportedProblemId(-1)));
     }
 
+    @Test
+    void getImagesByCategory_WithValidData_ShouldReturnImagesURL() {
+        String imageUrl = "https://example.com/image.png";
+        ReportedProblemId reportedProblemId = adapter.reportProblem(createReportProblemRequest(), problemStatus, createReportedProblemAddress());
+        adapter.updateProblemWithImageUrl(imageUrl, reportedProblemId);
+
+        final var imagesUrl = adapter.getImagesByCategory(1);
+
+        assertTrue(imagesUrl.contains(imageUrl));
+    }
+
+    @Test
+    void getImagesByCategory_WithInvalidCategory_ShouldThrowCategoryNotFoundException() {
+
+        assertThrows(CategoryNotFoundException.class, () -> adapter.getImagesByCategory(-1));
+    }
+
     private ReportedProblemEntity createReportedProblem(CategoryEntity categoryEntity) {
         ReportedProblemEntity reportedProblemEntity = new ReportedProblemEntity();
         reportedProblemEntity.setDescription("Test problem description");

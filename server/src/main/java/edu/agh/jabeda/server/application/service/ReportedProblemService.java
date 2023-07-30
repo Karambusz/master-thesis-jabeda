@@ -102,4 +102,9 @@ public class ReportedProblemService implements ReportProblemUseCase {
     public void banUserByDeviceId(String userDeviceId) {
         reportedProblemPort.banUserByDeviceId(userDeviceId);
     }
+
+    @Override
+    public Collection<String> getImagesByCategory(Integer categoryId) {
+        return reportedProblemPort.getImagesByCategory(categoryId);
+    }
 }

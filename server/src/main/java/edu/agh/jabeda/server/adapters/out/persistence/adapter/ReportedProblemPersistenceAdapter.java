@@ -117,6 +117,15 @@ public class ReportedProblemPersistenceAdapter implements ReportedProblemPort {
     }
 
     @Override
+    public Collection<String> getImagesByCategory(Integer categoryId) {
+        final var categoryEntity = categoryRepository.findById(categoryId);
+        if (categoryEntity.isEmpty()) {
+            throw new CategoryNotFoundException(categoryId);
+        }
+        return reportedProblemRepository.getImageUrlsByProblemCategory(categoryId);
+    }
+
+    @Override
     public Collection<ReportedProblemEntity> getUserReportedProblemsHistory(String userDeviceId) {
         return reportedProblemRepository.getReportedProblemEntityByUserDevice_DeviceId(userDeviceId);
     }
