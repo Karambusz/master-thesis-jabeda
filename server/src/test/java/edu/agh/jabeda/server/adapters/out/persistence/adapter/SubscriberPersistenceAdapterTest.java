@@ -1,13 +1,6 @@
-package edu.agh.jabeda.server.adapters.out.persistence;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.when;
+package edu.agh.jabeda.server.adapters.out.persistence.adapter;
 
 import com.google.maps.model.LatLng;
-import edu.agh.jabeda.server.adapters.out.persistence.adapter.SubscriberPersistenceAdapter;
 import edu.agh.jabeda.server.adapters.out.persistence.entity.CategoryEntity;
 import edu.agh.jabeda.server.adapters.out.persistence.entity.RoleEntity;
 import edu.agh.jabeda.server.adapters.out.persistence.entity.SubscriberDataEntity;
@@ -29,9 +22,16 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.when;
 
 @DataJpaTest
 class SubscriberPersistenceAdapterTest {

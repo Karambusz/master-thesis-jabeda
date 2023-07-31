@@ -110,7 +110,6 @@ const ProblemTable = ({problems, categories, problemTypes, onClick, isHistory}) 
         {
             name: 'problemStatus',
             header: 'Status',
-            sortable: false,
             defaultWidth: 100,
         },
        {

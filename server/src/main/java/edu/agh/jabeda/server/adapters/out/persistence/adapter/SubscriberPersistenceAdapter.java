@@ -116,7 +116,8 @@ public class SubscriberPersistenceAdapter implements SubscriberPort {
         subscriberAddressEntity.setCountry(body.getCountry());
         subscriberAddressEntity.setCity(body.getCity());
         subscriberAddressEntity.setStreet(body.getStreet());
-        subscriberAddressEntity.setBuildingNumber(body.getBuildingNumber().trim());
+        final var buildingNumber = body.getBuildingNumber();
+        subscriberAddressEntity.setBuildingNumber(buildingNumber != null ? buildingNumber.trim() : null);
         subscriberAddressEntity.setLongitude(19.944544);
         subscriberAddressEntity.setLatitude(50.049683);
         return subscriberAddressEntity;

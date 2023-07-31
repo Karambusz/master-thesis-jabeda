@@ -29,6 +29,11 @@ const ProblemCardComponent = ({ data, open, problemStatuses, onClose, updateStat
         onClose();
     }
 
+    const banUserDevice = () => {
+        data && banUser(data.userDeviceId)
+        onClose();
+    }
+
     useEffect(() => {
         const statusOptions = problemStatuses.map(({statusName, statusCode}) =>  {return {value: statusCode, label: statusName};})
         setStatusOptions(statusOptions);
@@ -52,23 +57,6 @@ const ProblemCardComponent = ({ data, open, problemStatuses, onClose, updateStat
                         >
                             {data.problem}
                         </Typography>
-                        <Typography variant="body2" color="#222b3b">
-                            <strong>Kategoria:</strong> {data.category}
-                        </Typography>
-                        <Typography variant="body2" color="#222b3b">
-                            <strong>Data:</strong> {data.date}
-                        </Typography>
-                        <Typography variant="body2" color="#222b3b">
-                            <strong>Lokacja:</strong> {data.address}
-                        </Typography>
-                        <Typography variant="body2" color="#222b3b">
-                            <strong>Ilość odrzuconych zgłoszeń urzytkownika:</strong> {data.rejectedProblemsCount}
-                        </Typography>
-                        <br/>
-                        <Typography variant="body2" color="#222b3b">
-                            <strong>Opis:</strong>  {data.description}
-                        </Typography>
-                        <br/>
                         {!isHistory
                             ? <div>
                                 <Typography variant="body2" color="#222b3b">
@@ -92,10 +80,27 @@ const ProblemCardComponent = ({ data, open, problemStatuses, onClose, updateStat
                                 <strong>Status:</strong> {status && status.label}
                             </Typography>
                         }
+                        <Typography variant="body2" color="#222b3b">
+                            <strong>Kategoria:</strong> {data.category}
+                        </Typography>
+                        <Typography variant="body2" color="#222b3b">
+                            <strong>Data:</strong> {data.date}
+                        </Typography>
+                        <Typography variant="body2" color="#222b3b">
+                            <strong>Lokacja:</strong> {data.address}
+                        </Typography>
+                        {!isHistory && <Typography variant="body2" color="#222b3b">
+                            <strong>Ilość odrzuconych zgłoszeń użytkownika:</strong> {data.rejectedProblemsCount}
+                        </Typography> }
+                        <br/>
+                        <Typography variant="body2" color="#222b3b">
+                            <strong>Opis:</strong>  {data.description}
+                        </Typography>
+                        <br/>
                     </CardContent>
                     <CardActions style={{justifyContent: 'center'}}>
                         {!isHistory && <CustomButton  additionalClass="card" size="small" onClick={updateProblemStatus}>Zapisz</CustomButton>}
-                        {!isHistory && <CustomButton  additionalClass="card" size="small" onClick={() => banUser(data.userDeviceId)}>Ban</CustomButton>}
+                        {!isHistory && <CustomButton  additionalClass="card" size="small" onClick={banUserDevice}>Ban</CustomButton>}
                         <CustomButton additionalClass="card" size="small" onClick={onClose}>Zamknij</CustomButton>
                     </CardActions>
 

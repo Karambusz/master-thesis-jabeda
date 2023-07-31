@@ -3,7 +3,7 @@ package edu.agh.jabeda.server.application.service;
 import com.google.maps.model.LatLng;
 import edu.agh.jabeda.server.application.port.in.model.request.CreateSubscriberRequest;
 import edu.agh.jabeda.server.application.port.in.model.request.UpdateSubscriberRequest;
-import edu.agh.jabeda.server.application.port.in.model.usecase.SubscriberUseCase;
+import edu.agh.jabeda.server.application.port.in.usecase.SubscriberUseCase;
 import edu.agh.jabeda.server.application.port.out.SubscriberPort;
 import edu.agh.jabeda.server.application.service.mapper.SubscriberMapper;
 import edu.agh.jabeda.server.common.UseCase;

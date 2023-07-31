@@ -1,6 +1,6 @@
 package edu.agh.jabeda.server.adapters.in.web.security.services;
 
-import edu.agh.jabeda.server.application.port.in.model.usecase.AuthUseCase;
+import edu.agh.jabeda.server.application.port.in.usecase.AuthUseCase;
 import edu.agh.jabeda.server.domain.Subscriber;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

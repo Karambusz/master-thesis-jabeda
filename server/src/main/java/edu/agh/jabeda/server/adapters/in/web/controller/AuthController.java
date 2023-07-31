@@ -2,7 +2,7 @@ package edu.agh.jabeda.server.adapters.in.web.controller;
 
 import edu.agh.jabeda.server.adapters.in.web.security.jwt.JwtUtils;
 import edu.agh.jabeda.server.adapters.in.web.security.services.DefaultUserDetails;
-import edu.agh.jabeda.server.application.port.in.model.usecase.SubscriberUseCase;
+import edu.agh.jabeda.server.application.port.in.usecase.SubscriberUseCase;
 import edu.agh.jabeda.server.application.port.in.model.request.CreateSubscriberRequest;
 import edu.agh.jabeda.server.application.port.in.model.response.JwtResponse;
 import edu.agh.jabeda.server.application.port.in.model.request.LoginRequest;

@@ -4,7 +4,7 @@ import {useSelector} from 'react-redux';
 
 const HomePage = () => {
 
-    const {user, isLogged} = useSelector(state => state)
+    const {userData: {user, isLogged}} = useSelector(state => state);
 
 
 

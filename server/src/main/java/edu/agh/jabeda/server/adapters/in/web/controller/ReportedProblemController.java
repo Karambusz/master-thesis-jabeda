@@ -2,7 +2,8 @@ package edu.agh.jabeda.server.adapters.in.web.controller;
 
 import edu.agh.jabeda.server.adapters.in.web.dto.ReportedProblemDto;
 import edu.agh.jabeda.server.application.port.in.model.request.ReportProblemRequest;
-import edu.agh.jabeda.server.application.port.in.model.usecase.ReportProblemUseCase;
+import edu.agh.jabeda.server.application.port.in.usecase.ReportProblemUseCase;
+import edu.agh.jabeda.server.application.service.mapper.ReportedProblemMapper;
 import edu.agh.jabeda.server.domain.ReportedProblemId;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -10,6 +11,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -37,9 +39,12 @@ public class ReportedProblemController {
 
     private final ReportProblemUseCase reportProblemUseCase;
 
+    private final ReportedProblemMapper reportedProblemMapper;
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @Operation(summary = "Create reported problem")
+    @Operation(summary = "Create reported problem",
+            security = @SecurityRequirement(name = "Bearer Authentication"))
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Successfully returns an id of created reported problem",
                     content = { @Content(mediaType = "application/json",
@@ -54,7 +59,8 @@ public class ReportedProblemController {
 
     @PatchMapping(path = "/{reportedProblemId}/status")
     @ResponseStatus(HttpStatus.OK)
-    @Operation(summary = "Update reported problem status")
+    @Operation(summary = "Update reported problem status",
+            security = @SecurityRequirement(name = "Bearer Authentication"))
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
                     description = "Successfully update reported problem status and assign subscriber to problem",
@@ -67,17 +73,18 @@ public class ReportedProblemController {
              @RequestParam Integer problemStatusId,
              @RequestParam Integer subscriberId
     ) {
-        return reportProblemUseCase.updateReportedProblemStatus(reportedProblemId, problemStatusId, subscriberId);
+        return reportedProblemMapper.toReportedProblemDto(
+                reportProblemUseCase.updateReportedProblemStatus(reportedProblemId, problemStatusId, subscriberId)
+        );
     }
 
     @PatchMapping(path = "/users/{userDeviceId}/ban")
     @ResponseStatus(HttpStatus.OK)
-    @Operation(summary = "Ban user by device id")
+    @Operation(summary = "Ban user by device id",
+            security = @SecurityRequirement(name = "Bearer Authentication"))
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
-                    description = "Successfully banned user by device id",
-                    content = { @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = ReportedProblemDto.class)) }),
+                    description = "Successfully banned user by device id"),
             @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
             @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content)
     })
@@ -86,7 +93,8 @@ public class ReportedProblemController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @Operation(summary = "Get all pending reported problems")
+    @Operation(summary = "Get all pending reported problems",
+            security = @SecurityRequirement(name = "Bearer Authentication"))
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully returns  all pending reported problems",
                     content = { @Content(mediaType = "application/json",
@@ -97,11 +105,14 @@ public class ReportedProblemController {
     @GetMapping
     Collection<ReportedProblemDto> getNewReportedProblemsByCategories(@Valid @RequestParam List<String> category,
                                                                       @Valid @RequestParam Integer subscriberId) {
-        return reportProblemUseCase.getNewReportedProblemsByCategories(category, subscriberId);
+        return reportedProblemMapper.toReportedProblemDtos(
+                reportProblemUseCase.getNewReportedProblemsByCategories(category, subscriberId)
+        );
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @Operation(summary = "Get user reported problems history")
+    @Operation(summary = "Get user reported problems history",
+            security = @SecurityRequirement(name = "Bearer Authentication"))
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully returns all user reported problems",
                     content = { @Content(mediaType = "application/json",
@@ -111,11 +122,14 @@ public class ReportedProblemController {
     })
     @GetMapping(path="/user-history")
     Collection<ReportedProblemDto> getUserReportedProblemsHistory(@Valid @RequestParam String userDeviceId) {
-        return reportProblemUseCase.getUserReportedProblemsHistory(userDeviceId);
+        return reportedProblemMapper.toReportedProblemDtos(
+                reportProblemUseCase.getUserReportedProblemsHistory(userDeviceId)
+        );
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @Operation(summary = "Get subscriber reported problems history")
+    @Operation(summary = "Get subscriber reported problems history",
+            security = @SecurityRequirement(name = "Bearer Authentication"))
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully returns all processed by subscriber reported problems",
                     content = { @Content(mediaType = "application/json",
@@ -125,7 +139,23 @@ public class ReportedProblemController {
     })
     @GetMapping(path="/subscriber-history")
     Collection<ReportedProblemDto> getSubscriberReportedProblemsHistory(@Valid @RequestParam Integer subscriberId) {
-        return reportProblemUseCase.getSubscriberReportedProblemsHistory(subscriberId);
+        return reportedProblemMapper.toReportedProblemDtos(
+                reportProblemUseCase.getSubscriberReportedProblemsHistory(subscriberId)
+        );
 
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Get images by category for machine learning support")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully returns all images by category for machine learning support",
+                    content = { @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = String.class)))}),
+            @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+            @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content)
+    })
+    @GetMapping(path="/images")
+    Collection<String> getImagesByCategory(@Valid @RequestParam Integer categoryId) {
+        return reportProblemUseCase.getImagesByCategory(categoryId);
     }
 }
