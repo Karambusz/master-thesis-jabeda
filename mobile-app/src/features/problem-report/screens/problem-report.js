@@ -32,10 +32,14 @@ import {
     REPORT_PROBLEM_SUBMIT_LABEL,
     SUBMIT_TOAST_TEXT1_MESSAGE,
     SUBMIT_TOAST_TEXT2_MESSAGE,
-    CATEGORY_TRANSLATED_VALUES, CATEGORY_PREDICTION_HELPER_TEXT
+    CATEGORY_TRANSLATED_VALUES,
+    CATEGORY_PREDICTION_HELPER_TEXT,
+    CATEGORY_PREDICTED_BY_YOLO,
+    YOLO_DIDNT_PREDICT_CATEGORY
 } from "../../../constants/constants";
 import { setProblem, setProblemCategory, setProblemDescription } from "../../../services/redux/actions/problem.actions";
 import * as Application from "expo-application";
+import { Ionicons } from "@expo/vector-icons";
 
 export const selectValidator = (value, errorText = '') => {
     if (!value || value.length <= 0) {
@@ -120,6 +124,17 @@ export const ProblemReportScreen = ({navigation}) => {
                                         <View
                                             style={{padding: 10}}
                                         >
+                                            {Object.keys(predictedProblemCategory).length > 0 && predictedProblemCategory.isDetected
+                                             ? (<Text variant="success">
+                                                    <Ionicons name="checkmark-circle-sharp" size={15} color={colors.ui.success} />
+                                                    {CATEGORY_PREDICTED_BY_YOLO}
+                                                </Text>) :
+                                                (<Text variant="error">
+                                                    <Ionicons name="ios-close-circle" size={15} color={colors.ui.error} />
+                                                    {YOLO_DIDNT_PREDICT_CATEGORY}
+                                                </Text>)
+                                            }
+                                            <Spacer position="top" size="medium" />
                                             <PaperSelect
                                                 label={CATEGORY_LABEL}
                                                 value={problemCategory}
@@ -167,9 +182,11 @@ export const ProblemReportScreen = ({navigation}) => {
                                                 modalDoneButtonText={MODAL_DONE_BUTTON_LABEL}
                                                 dialogButtonLabelStyle={{color: colors.brand.primary}}
                                             />
-                                            <Text variant="error">
-                                                {CATEGORY_PREDICTION_HELPER_TEXT}
-                                            </Text>
+                                            {Object.keys(predictedProblemCategory).length > 0 && predictedProblemCategory.isDetected &&
+                                                <Text variant="error">
+                                                    {CATEGORY_PREDICTION_HELPER_TEXT}
+                                                </Text>
+                                            }
                                             <Spacer position="top" size="medium" />
                                             <Spacer position="top" size="medium" />
                                             <TouchableWithoutFeedback onPress={() => {

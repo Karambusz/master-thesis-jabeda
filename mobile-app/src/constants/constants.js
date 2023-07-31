@@ -28,6 +28,8 @@ export const PROBLEM_SUMMARY_ERROR_MESSAGE = "Spróbuj wysłać zgłoszenie pó�
 export const GO_HOME_BUTTON_LABEL = "Powrót do strony głównej";
 
 export const CATEGORY_PREDICTION_HELPER_TEXT = "Sprawdź czy kategoria została prawidłowo zidentyfikowana (jeżeli nie, ustaw poprawną kategorię)!";
+export const CATEGORY_PREDICTED_BY_YOLO= "Kategoria przewidziana przez YOLO";
+export const YOLO_DIDNT_PREDICT_CATEGORY= "YOLO nie przewidział kategorii";
 export const CATEGORY_TRANSLATED_VALUES = {
     "Garbage and segregation": "Śmiecie i segregacja",
     "Destruction": "Zniszczenia"
